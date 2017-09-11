@@ -118,13 +118,17 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Behaviour.h" />
+    <ClInclude Include="Behaviours\Camera.h" />
     <ClInclude Include="Color\color.h" />
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="hare.h" />
+    <ClInclude Include="Input.h" />
     <ClInclude Include="Mathf.h" />
     <ClInclude Include="Physics\Vector.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="Time.h" />
+    <ClInclude Include="Transform\transform.h" />
+    <ClInclude Include="Utils\list.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

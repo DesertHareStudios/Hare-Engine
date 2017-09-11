@@ -9,7 +9,10 @@
 #include "Mathf.h"
 #include "Physics\Vector.h"
 #include "Color\color.h"
-
+#include "Input.h"
+#include "GameObject.h"
+#include "Transform\transform.h"
+#include "Behaviour.h"
 
 float Time::deltaTime = 0.0;
 float Time::timeScale = 1.0;
@@ -22,10 +25,9 @@ void render(void) {
 	high_resolution_clock::time_point t1 = high_resolution_clock::now();
 
 	//TODO: Render stuff
-
+	
 	high_resolution_clock::time_point t2 = high_resolution_clock::now();
 	duration<double, std::milli> timeSpan = t2 - t1;
-	std::cout << Time::deltaTime << std::endl;
 	glutSwapBuffers();
 }
 
