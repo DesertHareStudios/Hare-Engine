@@ -126,6 +126,7 @@
     <ClInclude Include="Mathf.h" />
     <ClInclude Include="Physics\Vector.h" />
     <ClInclude Include="Scene.h" />
+    <ClInclude Include="test.h" />
     <ClInclude Include="Time.h" />
     <ClInclude Include="Transform\transform.h" />
     <ClInclude Include="Utils\list.h" />

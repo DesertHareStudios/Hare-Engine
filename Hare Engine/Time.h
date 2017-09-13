@@ -4,10 +4,9 @@
 #include <ratio>
 #include <chrono>
 
-class Time {
+namespace Time {
 
-public:
-	static float deltaTime;
-	static float timeScale;
+	float deltaTime = 0.0;
+	float timeScale = 0.0;
 
 };

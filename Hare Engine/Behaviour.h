@@ -7,5 +7,7 @@ public:
 	void Start();
 	void Update();
 	void LateUpdate();
+	Transform* transform;
+	GameObject* gameObject;
 
 };
