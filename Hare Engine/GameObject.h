@@ -2,8 +2,9 @@
 
 #include <vector>
 #include <string>
-#include "Transform\transform.h"
-#include "Behaviour.h"
+
+class Transform;
+class Behaviour;
 
 class GameObject {
 
@@ -13,24 +14,10 @@ public:
 	Transform* transform;
 	std::vector<Behaviour*> behaviours;
 
-	GameObject(std::string name) {
-		this->name = name;
-		behaviours.reserve(10);
-	}
+	GameObject(std::string name);
 
-	void addBehaviour(Behaviour* behaviour) {
-		behaviour->gameObject = this;
-		behaviour->transform = this->transform;
-		behaviours.push_back(behaviour);
-	}
+	void addBehaviour(Behaviour* behaviour);
 
-	template <type B>
-	Behaviour* getBehaviour<B>() {
-		for (int i = 0; i < behaviours.size(); i++) {
-			if (dynamic_cast<B*>(*behaviour[i]) != nullptr) {
-				return behaviour[i];
-			}
-		}
-		return nullptr;
-	}
+	template <class T>
+	T* getBehaviour();
 };

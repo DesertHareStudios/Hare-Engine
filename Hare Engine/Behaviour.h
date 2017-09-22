@@ -1,13 +1,15 @@
 #pragma once
 
+class Transform;
+class GameObject;
+
 class Behaviour {
 
 public:
-	void Awake();
-	void Start();
-	void Update();
-	void LateUpdate();
-	Transform* transform;
+	virtual void Awake() {}
+	virtual void Start() {}
+	virtual void Update() {}
+	virtual void LateUpdate() {}
 	GameObject* gameObject;
-
+	Transform* transform;
 };

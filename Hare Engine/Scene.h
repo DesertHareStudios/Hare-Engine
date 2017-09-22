@@ -20,11 +20,18 @@ public:
 
 	void Update() {
 		std::vector<std::thread> threads;
-		for (int i = 0; i < gameObjects.size(); i++) {
-			for (int j = 0; j < gameObjects[i].behaviours.size(); j++) {
-				std::thread update(gameObjects[i].behaviours[j].Update);
+		threads.reserve(gameObjects.size() * 10);
+		try {
+			for (int i = 0; i < gameObjects.size(); i++) {
+				for (int j = 0; j < gameObjects[i]->behaviours.size(); j++) {
+					threads.push_back(std::thread([&] {
+						try {
+							gameObjects[i]->behaviours[j]->Update();
+						} catch (...) {}
+					}));
+				}
 			}
-		}
+		} catch (...) {}
 		for (int i = 0; i < threads.size(); i++) {
 			threads[i].join();
 		}
@@ -33,11 +40,18 @@ public:
 
 	void LateUpdate() {
 		std::vector<std::thread> threads;
-		for (int i = 0; i < gameObjects.size(); i++) {
-			for (int j = 0; j < gameObjects[i].behaviours.size(); j++) {
-				std::thread update(gameObjects[i].behaviours[j].Update);
+		threads.reserve(gameObjects.size() * 10);
+		try {
+			for (int i = 0; i < gameObjects.size(); i++) {
+				for (int j = 0; j < gameObjects[i]->behaviours.size(); j++) {
+					threads.push_back(std::thread([&] {
+						try {
+							gameObjects[i]->behaviours[j]->LateUpdate();
+						} catch (...) {}
+					}));
+				}
 			}
-		}
+		} catch (...) {}
 		for (int i = 0; i < threads.size(); i++) {
 			threads[i].join();
 		}

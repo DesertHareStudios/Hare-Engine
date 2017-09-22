@@ -8,7 +8,7 @@
 
 class TestBehaviour : public Behaviour {
 	void Update() {
-		std::cout << Time::deltaTime << "; testing " << gameObject.name << std::endl;
+		std::cout << Time::deltaTime << "; testing " << gameObject->name << std::endl;
 	}
 };
 

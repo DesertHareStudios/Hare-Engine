@@ -26,7 +26,7 @@ namespace hare {
 		using namespace std::chrono;
 		high_resolution_clock::time_point t1 = high_resolution_clock::now();
 
-		currentScene.Update();
+		currentScene->Update();
 
 		high_resolution_clock::time_point t2 = high_resolution_clock::now();
 		duration<double> timeSpan = t2 - t1;

@@ -114,7 +114,9 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="test.cpp" />
+    <ClCompile Include="Transform\Transform.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Behaviour.h" />
@@ -126,9 +128,8 @@
     <ClInclude Include="Mathf.h" />
     <ClInclude Include="Physics\Vector.h" />
     <ClInclude Include="Scene.h" />
-    <ClInclude Include="test.h" />
     <ClInclude Include="Time.h" />
-    <ClInclude Include="Transform\transform.h" />
+    <ClInclude Include="Transform\Transform.h" />
     <ClInclude Include="Utils\list.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
