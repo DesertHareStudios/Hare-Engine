@@ -1,6 +1,7 @@
 #pragma once
 
 #include "..\Physics\Vector.h"
+#include "..\Quaternion.h";
 
 class GameObject;
 
@@ -8,6 +9,7 @@ class Transform {
 
 public:
 	Vector position;
+	Quaternion rotation;
 	Transform* parent;
 	GameObject* gameObject;
 

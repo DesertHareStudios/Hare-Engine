@@ -46,4 +46,13 @@ public:
 	Vector operator-=(Vector);
 	Vector operator*=(Vector);
 	Vector operator/=(Vector);
+
+	static Vector interpolate(Vector from, Vector to, float t) {
+		return Vector(
+			from.x + (to.x - from.x) * t,
+			from.y + (to.y - from.y) * t,
+			from.z + (to.z - from.z) * t,
+			from.w + (to.w - from.w) * t
+		);
+	}
 };

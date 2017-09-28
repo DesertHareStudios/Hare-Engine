@@ -31,6 +31,7 @@ namespace hare {
 		high_resolution_clock::time_point t2 = high_resolution_clock::now();
 		duration<double> timeSpan = t2 - t1;
 		Time::deltaTime = timeSpan.count();
+		Time::time += Time::deltaTime;
 		glutSwapBuffers();
 	}
 

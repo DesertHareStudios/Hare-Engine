@@ -7,6 +7,7 @@
 #include "hare.h"
 
 class TestBehaviour : public Behaviour {
+public:
 	void Update() {
 		std::cout << Time::deltaTime << "; testing " << gameObject->name << std::endl;
 	}
