@@ -4,8 +4,8 @@
 
         public Transform parent;
         public Vector position;
-        //public Quaternion rotation;
-        //public GameObject gameObject;
+        public Octonion rotation;
+        public GameObject gameObject;
 
         public void Translate(Vector to) {
             position += to;

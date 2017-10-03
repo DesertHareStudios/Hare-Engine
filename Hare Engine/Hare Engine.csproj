@@ -47,7 +47,9 @@
     <Compile Include="Color\Color.cs" />
     <Compile Include="GameObject.cs" />
     <Compile Include="Hare.cs" />
+    <Compile Include="Input.cs" />
     <Compile Include="Mathf.cs" />
+    <Compile Include="Octonion.cs" />
     <Compile Include="Physics\Vector.cs" />
     <Compile Include="Scene.cs" />
     <Compile Include="Time.cs" />
