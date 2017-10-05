@@ -53,6 +53,7 @@
     <Compile Include="Mathf.cs" />
     <Compile Include="Octonion.cs" />
     <Compile Include="Physics\Vector.cs" />
+    <Compile Include="Random.cs" />
     <Compile Include="Scene.cs" />
     <Compile Include="Time.cs" />
     <Compile Include="Transform\Transform.cs" />
