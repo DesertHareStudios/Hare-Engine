@@ -97,6 +97,46 @@
             );
         }
 
+        public static Octonion operator *(Octonion a, float b) {
+            return new Octonion(
+                    a.a * b,
+                    a.b * b,
+                    a.c * b,
+                    a.d * b,
+                    a.e * b,
+                    a.f * b,
+                    a.g * b,
+                    a.h * b
+                );
+        }
+
+        public static float Dot(Octonion a, Octonion b) {
+            return a.a * b.a + a.b * b.b + a.c * b.c + a.d * b.d + a.e * b.e +
+                a.f * b.f + a.g * b.g + a.h * b.h;
+        }
+
+        public static Octonion Slerp(Octonion a, Octonion b, float t) {
+            float dot = Dot(a, b);
+            float theta = Mathf.Acos(dot);
+            float sTheta = Mathf.Sin(theta);
+            float w1 = Mathf.Sin((1.0f - t) * theta) / sTheta;
+            float w2 = Mathf.Sin(t * theta) / sTheta;
+            return a * w1 + b * w2;
+        }
+
+        public static Octonion Lerp(Octonion from, Octonion to, float t) {
+            return new Octonion(
+                    from.a + (to.a - from.a) * t,
+                    from.b + (to.b - from.b) * t,
+                    from.c + (to.c - from.c) * t,
+                    from.d + (to.d - from.d) * t,
+                    from.e + (to.e - from.e) * t,
+                    from.f + (to.f - from.f) * t,
+                    from.g + (to.g - from.g) * t,
+                    from.h + (to.h - from.h) * t
+                );
+        }
+
     }
 
 }

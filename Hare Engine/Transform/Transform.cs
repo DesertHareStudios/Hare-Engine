@@ -1,11 +1,12 @@
 ﻿namespace HareEngine {
 
     class Transform {
-
+        
+        public GameObject gameObject;
         public Transform parent;
         public Vector position;
         public Octonion rotation;
-        public GameObject gameObject;
+        public Vector scale;
 
         public void Translate(Vector to) {
             position += to;
