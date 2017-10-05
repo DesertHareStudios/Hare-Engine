@@ -44,6 +44,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Behaviour.cs" />
+    <Compile Include="Behaviours\Camera.cs" />
+    <Compile Include="Behaviours\Renderers\SpriteRenderer.cs" />
     <Compile Include="Color\Color.cs" />
     <Compile Include="GameObject.cs" />
     <Compile Include="Hare.cs" />
@@ -56,8 +58,6 @@
     <Compile Include="Transform\Transform.cs" />
     <Compile Include="Window.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Behaviours\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

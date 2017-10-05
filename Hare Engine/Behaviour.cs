@@ -2,6 +2,8 @@
 
     class Behaviour {
 
+        public bool Active = true;
+
         public GameObject gameObject { private set; get; }
 
         public Transform transform {

@@ -8,6 +8,19 @@ namespace HareEngine {
         public string Name;
         public string Tag;
         public Transform transform { private set; get; }
+        private bool _active = true;
+
+        public bool Active {
+            get {
+                return _active;
+            }
+            set {
+                _active = value;
+                foreach (Transform t in transform.childs) {
+                    t.gameObject.Active = value;
+                }
+            }
+        }
 
         public GameObject(Transform transform, string name, string tag) {
             this.transform = transform;
