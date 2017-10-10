@@ -1,6 +1,6 @@
 ﻿namespace HareEngine {
 
-    class Collider : Behaviour {
+    public class Collider : Behaviour {
 
         public bool isTrigger = false;
 

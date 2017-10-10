@@ -4,7 +4,7 @@ using OpenTK;
 
 namespace HareEngine {
 
-    sealed class Window : GameWindow {
+    public class Window : GameWindow {
 
         public Window(int width, int height, string title) : base(
             width,

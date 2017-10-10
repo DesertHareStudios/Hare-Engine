@@ -3,7 +3,7 @@ using OpenTK;
 
 namespace HareEngine {
 
-    class Camera : Behaviour {
+    public class Camera : Behaviour {
 
         public Viewmode viewmode;
         public float renderDistance;

@@ -1,6 +1,6 @@
 ﻿namespace HareEngine {
 
-    class Physics {
+    public class Physics {
 
         private static Physics instance;
 

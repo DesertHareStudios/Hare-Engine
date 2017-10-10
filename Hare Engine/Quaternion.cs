@@ -1,6 +1,6 @@
 ﻿namespace HareEngine {
 
-    class Quaternion {
+    public class Quaternion {
 
         public float x;
         public float y;

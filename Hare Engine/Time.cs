@@ -1,6 +1,6 @@
 ﻿namespace HareEngine {
 
-    class Time {
+    public class Time {
 
         public static float deltaTime = 0f;
         public static float fixedDeltaTime = 0f;

@@ -1,6 +1,6 @@
 ﻿namespace HareEngine {
 
-    class Behaviour {
+    public class Behaviour {
 
         private bool active = true;
 

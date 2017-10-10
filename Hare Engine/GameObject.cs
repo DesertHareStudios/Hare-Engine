@@ -2,7 +2,7 @@
 
 namespace HareEngine {
 
-    class GameObject {
+    public class GameObject {
 
         public List<Behaviour> behaviours;
         public string Name;

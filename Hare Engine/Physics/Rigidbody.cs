@@ -2,7 +2,7 @@
 
 namespace HareEngine {
 
-    class Rigidbody : Behaviour {
+    public class Rigidbody : Behaviour {
 
         private static List<Rigidbody> bodies;
 

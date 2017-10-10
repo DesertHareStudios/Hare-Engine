@@ -1,6 +1,6 @@
 ﻿namespace HareEngine {
 
-    class Input {
+    public class Input {
 
     }
 

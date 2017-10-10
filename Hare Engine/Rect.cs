@@ -1,6 +1,6 @@
 ﻿namespace HareEngine {
 
-    class Rect {
+    public class Rect {
 
         public float x1;
         public float y1;

@@ -1,6 +1,6 @@
 ﻿namespace HareEngine {
 
-    class Color {
+    public class Color {
 
         public float r;
         public float g;

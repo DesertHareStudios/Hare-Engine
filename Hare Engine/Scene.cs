@@ -4,7 +4,7 @@ using System.Threading;
 
 namespace HareEngine {
 
-    class Scene {
+    public class Scene {
         public string Name = "";
         public List<GameObject> gameObjects;
 

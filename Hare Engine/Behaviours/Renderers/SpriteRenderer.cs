@@ -1,6 +1,6 @@
 ﻿namespace HareEngine {
 
-    class SpriteRenderer : Behaviour {
+    public class SpriteRenderer : Behaviour {
 
         public Sprite sprite;
         public Color tint;
@@ -12,7 +12,7 @@
         }
     }
 
-    class Sprite {
+    public class Sprite {
 
     }
 

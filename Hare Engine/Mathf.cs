@@ -2,7 +2,7 @@
 
 namespace HareEngine {
 
-    class Mathf {
+    public class Mathf {
 
         public static float ToRadians(float degrees) {
             return degrees * (3.14159f / 180.0f);

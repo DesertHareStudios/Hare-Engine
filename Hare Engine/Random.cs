@@ -1,6 +1,6 @@
 ﻿namespace HareEngine {
 
-    class Random {
+    public class Random {
 
         private static int x = 1618;
 

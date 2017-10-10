@@ -1,6 +1,6 @@
 ﻿namespace HareEngine {
 
-    class Vector {
+    public class Vector {
 
         public float x;
         public float y;

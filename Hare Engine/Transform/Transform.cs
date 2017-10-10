@@ -2,7 +2,7 @@
 
 namespace HareEngine {
 
-    class Transform {
+    public class Transform {
 
         public GameObject gameObject;
         public Transform parent;
