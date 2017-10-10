@@ -5,8 +5,8 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{A799A7E2-C1D5-4C78-8096-E8520FE8A6EE}</ProjectGuid>
-    <OutputType>Exe</OutputType>
-    <RootNamespace>Hare_Engine</RootNamespace>
+    <OutputType>Library</OutputType>
+    <RootNamespace>HareEngine</RootNamespace>
     <AssemblyName>Hare Engine</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
@@ -30,6 +30,9 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject />
   </PropertyGroup>
   <ItemGroup>
     <None Include="App.config" />
