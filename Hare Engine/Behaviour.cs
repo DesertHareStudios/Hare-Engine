@@ -2,7 +2,21 @@
 
     class Behaviour {
 
-        public bool Active = true;
+        private bool active = true;
+
+        public bool Active {
+            get {
+                return active;
+            }
+            set {
+                active = value;
+                if (value) {
+                    OnEnable();
+                } else {
+                    OnDisable();
+                }
+            }
+        }
 
         public GameObject gameObject { private set; get; }
 
@@ -14,6 +28,11 @@
 
         public Behaviour(GameObject gameObject) {
             this.gameObject = gameObject;
+            Active = true;
+        }
+
+        protected T GetComponent<T>() where T : Behaviour {
+            return gameObject.GetComponent<T>();
         }
 
         public virtual void Awake() { }
@@ -21,6 +40,8 @@
         public virtual void Update() { }
         public virtual void LateUpdate() { }
         public virtual void FixedUpdate() { }
+        public virtual void OnEnable() { }
+        public virtual void OnDisable() { }
     }
 
 }

@@ -17,6 +17,12 @@ namespace HareEngine {
             0,
             GraphicsContextFlags.ForwardCompatible) { }
 
+        public float AspectRatio {
+            get {
+                return (float)Width / (float)Height;
+            }
+        }
+
         protected override void OnUpdateFrame(FrameEventArgs e) {
             if (Hare.currentScene != null) {
                 Hare.currentScene.Update();

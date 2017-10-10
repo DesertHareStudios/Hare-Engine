@@ -51,9 +51,13 @@
     <Compile Include="Hare.cs" />
     <Compile Include="Input.cs" />
     <Compile Include="Mathf.cs" />
-    <Compile Include="Octonion.cs" />
+    <Compile Include="Physics\Collider.cs" />
+    <Compile Include="Physics\Physics.cs" />
+    <Compile Include="Physics\Rigidbody.cs" />
+    <Compile Include="Quaternion.cs" />
     <Compile Include="Physics\Vector.cs" />
     <Compile Include="Random.cs" />
+    <Compile Include="Rect.cs" />
     <Compile Include="Scene.cs" />
     <Compile Include="Time.cs" />
     <Compile Include="Transform\Transform.cs" />

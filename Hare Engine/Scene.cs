@@ -41,14 +41,16 @@ namespace HareEngine {
             List<Thread> threads = new List<Thread>();
             foreach (GameObject go in gameObjects) {
                 foreach (Behaviour b in go.behaviours) {
-                    Thread t = new Thread(new ThreadStart(() => {
-                        try {
-                            b.Start();
-                        } catch { }
-                    }));
-                    t.IsBackground = true;
-                    threads.Add(t);
-                    threads.Last().Start();
+                    if (b.Active) {
+                        Thread t = new Thread(new ThreadStart(() => {
+                            try {
+                                b.Start();
+                            } catch { }
+                        }));
+                        t.IsBackground = true;
+                        threads.Add(t);
+                        threads.Last().Start();
+                    }
                 }
             }
             foreach (Thread t in threads) {
@@ -60,14 +62,16 @@ namespace HareEngine {
             List<Thread> threads = new List<Thread>();
             foreach (GameObject go in gameObjects) {
                 foreach (Behaviour b in go.behaviours) {
-                    Thread t = new Thread(new ThreadStart(() => {
-                        try {
-                            b.Update();
-                        } catch { }
-                    }));
-                    t.IsBackground = true;
-                    threads.Add(t);
-                    threads.Last().Start();
+                    if (b.Active) {
+                        Thread t = new Thread(new ThreadStart(() => {
+                            try {
+                                b.Update();
+                            } catch { }
+                        }));
+                        t.IsBackground = true;
+                        threads.Add(t);
+                        threads.Last().Start();
+                    }
                 }
             }
             foreach (Thread t in threads) {
@@ -79,14 +83,16 @@ namespace HareEngine {
             List<Thread> threads = new List<Thread>();
             foreach (GameObject go in gameObjects) {
                 foreach (Behaviour b in go.behaviours) {
-                    Thread t = new Thread(new ThreadStart(() => {
-                        try {
-                            b.LateUpdate();
-                        } catch { }
-                    }));
-                    t.IsBackground = true;
-                    threads.Add(t);
-                    threads.Last().Start();
+                    if (b.Active) {
+                        Thread t = new Thread(new ThreadStart(() => {
+                            try {
+                                b.LateUpdate();
+                            } catch { }
+                        }));
+                        t.IsBackground = true;
+                        threads.Add(t);
+                        threads.Last().Start();
+                    }
                 }
             }
             foreach (Thread t in threads) {
@@ -98,14 +104,16 @@ namespace HareEngine {
             List<Thread> threads = new List<Thread>();
             foreach (GameObject go in gameObjects) {
                 foreach (Behaviour b in go.behaviours) {
-                    Thread t = new Thread(new ThreadStart(() => {
-                        try {
-                            b.FixedUpdate();
-                        } catch { }
-                    }));
-                    t.IsBackground = true;
-                    threads.Add(t);
-                    threads.Last().Start();
+                    if (b.Active) {
+                        Thread t = new Thread(new ThreadStart(() => {
+                            try {
+                                b.FixedUpdate();
+                            } catch { }
+                        }));
+                        t.IsBackground = true;
+                        threads.Add(t);
+                        threads.Last().Start();
+                    }
                 }
             }
             foreach (Thread t in threads) {
