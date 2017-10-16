@@ -33,7 +33,7 @@ namespace HareEngine {
         protected override void OnRenderFrame(FrameEventArgs e) {
             GL.ClearColor(Hare.clearColor.r, Hare.clearColor.g, Hare.clearColor.b, Hare.clearColor.a);
             GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
-
+            Hare.currentScene.Render();
             this.SwapBuffers();
         }
 

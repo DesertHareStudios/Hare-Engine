@@ -11,6 +11,40 @@ namespace HareEngine {
         public Quaternion rotation;
         public Vector scale;
 
+        public Vector RelativePosition {
+            get {
+                if (parent == null) {
+                    return position;
+                } else {
+                    return position - parent.RelativePosition;
+                }
+            }
+            set {
+                if (parent == null) {
+                    position = value;
+                } else {
+                    position = parent.RelativePosition + value;
+                }
+            }
+        }
+
+        public Vector AbsoluteScale {
+            get {
+                if (parent == null) {
+                    return scale;
+                } else {
+                    return parent.AbsoluteScale + scale;
+                }
+            }
+            set {
+                if (parent == null) {
+                    scale = value;
+                } else {
+                    scale = value - parent.AbsoluteScale;
+                }
+            }
+        }
+
         public Transform(GameObject gameObject) {
             this.gameObject = gameObject;
             parent = null;

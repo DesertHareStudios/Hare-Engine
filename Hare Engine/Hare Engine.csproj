@@ -50,6 +50,7 @@
     <Compile Include="Behaviours\Camera.cs" />
     <Compile Include="Behaviours\Renderers\SpriteRenderer.cs" />
     <Compile Include="Color\Color.cs" />
+    <Compile Include="FileLoader.cs" />
     <Compile Include="GameObject.cs" />
     <Compile Include="Hare.cs" />
     <Compile Include="Input.cs" />

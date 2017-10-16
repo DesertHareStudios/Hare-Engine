@@ -17,7 +17,7 @@ namespace HareEngine {
             }
         }
 
-        public override void FixedUpdate() {
+        public override void Update() {
             if (useGravity) {
                 switch (Physics.Instance.gravityType) {
                     case GravityType.Classic:

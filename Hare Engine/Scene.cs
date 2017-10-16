@@ -40,16 +40,18 @@ namespace HareEngine {
         public void Start() {
             List<Thread> threads = new List<Thread>();
             foreach (GameObject go in gameObjects) {
-                foreach (Behaviour b in go.behaviours) {
-                    if (b.Active) {
-                        Thread t = new Thread(new ThreadStart(() => {
-                            try {
-                                b.Start();
-                            } catch { }
-                        }));
-                        t.IsBackground = true;
-                        threads.Add(t);
-                        threads.Last().Start();
+                if (go.Active) {
+                    foreach (Behaviour b in go.behaviours) {
+                        if (b.Active) {
+                            Thread t = new Thread(new ThreadStart(() => {
+                                try {
+                                    b.Start();
+                                } catch { }
+                            }));
+                            t.IsBackground = true;
+                            threads.Add(t);
+                            threads.Last().Start();
+                        }
                     }
                 }
             }
@@ -61,16 +63,18 @@ namespace HareEngine {
         public void Update() {
             List<Thread> threads = new List<Thread>();
             foreach (GameObject go in gameObjects) {
-                foreach (Behaviour b in go.behaviours) {
-                    if (b.Active) {
-                        Thread t = new Thread(new ThreadStart(() => {
-                            try {
-                                b.Update();
-                            } catch { }
-                        }));
-                        t.IsBackground = true;
-                        threads.Add(t);
-                        threads.Last().Start();
+                if (go.Active) {
+                    foreach (Behaviour b in go.behaviours) {
+                        if (b.Active) {
+                            Thread t = new Thread(new ThreadStart(() => {
+                                try {
+                                    b.Update();
+                                } catch { }
+                            }));
+                            t.IsBackground = true;
+                            threads.Add(t);
+                            threads.Last().Start();
+                        }
                     }
                 }
             }
@@ -82,16 +86,18 @@ namespace HareEngine {
         public void LateUpdate() {
             List<Thread> threads = new List<Thread>();
             foreach (GameObject go in gameObjects) {
-                foreach (Behaviour b in go.behaviours) {
-                    if (b.Active) {
-                        Thread t = new Thread(new ThreadStart(() => {
-                            try {
-                                b.LateUpdate();
-                            } catch { }
-                        }));
-                        t.IsBackground = true;
-                        threads.Add(t);
-                        threads.Last().Start();
+                if (go.Active) {
+                    foreach (Behaviour b in go.behaviours) {
+                        if (b.Active) {
+                            Thread t = new Thread(new ThreadStart(() => {
+                                try {
+                                    b.LateUpdate();
+                                } catch { }
+                            }));
+                            t.IsBackground = true;
+                            threads.Add(t);
+                            threads.Last().Start();
+                        }
                     }
                 }
             }
@@ -100,24 +106,17 @@ namespace HareEngine {
             }
         }
 
-        public void FixedUpdate() {
-            List<Thread> threads = new List<Thread>();
+        public void Render() {
             foreach (GameObject go in gameObjects) {
-                foreach (Behaviour b in go.behaviours) {
-                    if (b.Active) {
-                        Thread t = new Thread(new ThreadStart(() => {
+                if (go.Active) {
+                    foreach (Behaviour b in go.behaviours) {
+                        if (b.Active) {
                             try {
-                                b.FixedUpdate();
+                                b.OnRender();
                             } catch { }
-                        }));
-                        t.IsBackground = true;
-                        threads.Add(t);
-                        threads.Last().Start();
+                        }
                     }
                 }
-            }
-            foreach (Thread t in threads) {
-                t.Join();
             }
         }
 
