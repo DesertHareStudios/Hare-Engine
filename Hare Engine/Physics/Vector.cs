@@ -61,7 +61,7 @@
         }
 
         public static Vector Lerp(Vector from, Vector to, float t) {
-            return from - (to - from) * t;
+            return from + (to - from) * t;
         }
 
         public static Vector operator +(Vector a, Vector b) {
@@ -118,6 +118,10 @@
                 Mathf.Pow(b.y - a.y, 2) +
                 Mathf.Pow(b.z - a.z, 2)
             );
+        }
+
+        public Vector Rotated(Quaternion q) {
+            return q * this;
         }
 
     }

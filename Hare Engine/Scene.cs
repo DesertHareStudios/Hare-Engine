@@ -83,6 +83,29 @@ namespace HareEngine {
             }
         }
 
+        public void FixedUpdate() {
+            List<Thread> threads = new List<Thread>();
+            foreach (GameObject go in gameObjects) {
+                if (go.Active) {
+                    foreach (Behaviour b in go.behaviours) {
+                        if (b.Active) {
+                            Thread t = new Thread(new ThreadStart(() => {
+                                try {
+                                    b.FixedUpdate();
+                                } catch { }
+                            }));
+                            t.IsBackground = true;
+                            threads.Add(t);
+                            threads.Last().Start();
+                        }
+                    }
+                }
+            }
+            foreach (Thread t in threads) {
+                t.Join();
+            }
+        }
+
         public void LateUpdate() {
             List<Thread> threads = new List<Thread>();
             foreach (GameObject go in gameObjects) {

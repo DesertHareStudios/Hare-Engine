@@ -39,9 +39,15 @@
         public virtual void Start() { }
         public virtual void Update() { }
         public virtual void LateUpdate() { }
+        public virtual void FixedUpdate() { }
         public virtual void OnEnable() { }
         public virtual void OnDisable() { }
         public virtual void OnRender() { }
+        public virtual void OnCollisionEnter(Collision collision) { }
+        public virtual void OnCollisionExit(Collision collision) { }
+        public virtual void OnTriggerEnter(Collider collider) { }
+        public virtual void OnTriggerExit(Collider collider) { }
+
     }
 
 }

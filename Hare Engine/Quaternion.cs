@@ -21,6 +21,12 @@
             this.w = 0f;
         }
 
+        public static Quaternion Identity {
+            get {
+                return new Quaternion(0f, 0f, 0f, 1f);
+            }
+        }
+
         public Quaternion Conjugate {
             get {
                 return new Quaternion(-x, -y, -z, w);
@@ -77,8 +83,7 @@
 
         public static Vector operator *(Quaternion q, Vector v) {
             Quaternion vecQuat = new Quaternion(v.Normal.x, v.Normal.y, v.Normal.z, 0f);
-            Quaternion resQuat = new Quaternion();
-            resQuat = q * (vecQuat* q.Conjugate);
+            Quaternion resQuat = q * (vecQuat * q.Conjugate);
             return new Vector(resQuat.x, resQuat.y, resQuat.z);
         }
 

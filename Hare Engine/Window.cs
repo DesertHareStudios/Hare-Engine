@@ -1,6 +1,7 @@
 ﻿using OpenTK.Graphics.OpenGL;
 using OpenTK.Graphics;
 using OpenTK;
+using System.Threading;
 
 namespace HareEngine {
 
@@ -25,14 +26,16 @@ namespace HareEngine {
 
         protected override void OnUpdateFrame(FrameEventArgs e) {
             if (Hare.currentScene != null) {
-                Hare.currentScene.Update();
-                Hare.currentScene.LateUpdate();
+                Hare.currentScene.FixedUpdate();
+                Thread.Sleep((int)(1000 * (Time.fixedDeltaTime - e.Time)));
             }
         }
 
         protected override void OnRenderFrame(FrameEventArgs e) {
             GL.ClearColor(Hare.clearColor.r, Hare.clearColor.g, Hare.clearColor.b, Hare.clearColor.a);
             GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
+            Hare.currentScene.Update();
+            Hare.currentScene.LateUpdate();
             Hare.currentScene.Render();
             this.SwapBuffers();
         }

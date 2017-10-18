@@ -62,6 +62,35 @@ namespace HareEngine {
             return null;
         }
 
+        public void OnCollisionEnter(Collision collision) {
+            foreach (Behaviour b in behaviours) {
+                if (b.Active) {
+                    b.OnCollisionEnter(collision);
+                }
+            }
+        }
+        public void OnCollisionExit(Collision collision) {
+            foreach (Behaviour b in behaviours) {
+                if (b.Active) {
+                    b.OnCollisionExit(collision);
+                }
+            }
+        }
+        public void OnTriggerEnter(Collider collider) {
+            foreach (Behaviour b in behaviours) {
+                if (b.Active) {
+                    b.OnTriggerEnter(collider);
+                }
+            }
+        }
+        public void OnTriggerExit(Collider collider) {
+            foreach (Behaviour b in behaviours) {
+                if (b.Active) {
+                    b.OnTriggerExit(collider);
+                }
+            }
+        }
+
     }
 
 }
