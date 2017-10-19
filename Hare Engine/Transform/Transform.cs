@@ -28,6 +28,12 @@ namespace HareEngine {
             }
         }
 
+        public Vector RotatedPosition {
+            get {
+                return position.Rotated(rotation);
+            }
+        }
+
         public Vector AbsoluteScale {
             get {
                 if (parent == null) {
@@ -50,7 +56,7 @@ namespace HareEngine {
             parent = null;
             childs = new List<Transform>();
             position = new Vector();
-            rotation = new Quaternion();
+            rotation = Quaternion.Identity;
             scale = new Vector(1f, 1f, 1f);
         }
 

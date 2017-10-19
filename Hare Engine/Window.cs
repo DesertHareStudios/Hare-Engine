@@ -7,6 +7,8 @@ namespace HareEngine {
 
     public class Window : GameWindow {
 
+        private bool init = true;
+
         public Window(int width, int height, string title) : base(
             width,
             height,
@@ -24,16 +26,29 @@ namespace HareEngine {
             }
         }
 
+        public void ReloadScene() {
+            init = true;
+            //TODO do more changes
+        }
+
         protected override void OnUpdateFrame(FrameEventArgs e) {
             if (Hare.currentScene != null) {
                 Hare.currentScene.FixedUpdate();
-                Thread.Sleep((int)(1000 * (Time.fixedDeltaTime - e.Time)));
+                int sleep = (int)(1000 * (Time.fixedDeltaTime - e.Time));
+                if (sleep > 0) {
+                    Thread.Sleep(sleep);
+                }
             }
         }
 
         protected override void OnRenderFrame(FrameEventArgs e) {
             GL.ClearColor(Hare.clearColor.r, Hare.clearColor.g, Hare.clearColor.b, Hare.clearColor.a);
             GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
+            if (init) {
+                init = false;
+                Hare.currentScene.Awake();
+                Hare.currentScene.Start();
+            }
             Hare.currentScene.Update();
             Hare.currentScene.LateUpdate();
             Hare.currentScene.Render();

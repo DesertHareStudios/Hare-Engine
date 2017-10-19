@@ -28,21 +28,24 @@ namespace HareEngine {
             }
         }
 
-        public GameObject(Transform transform, string name, string tag) {
-            this.transform = transform;
+        public GameObject(string name, string tag) {
+            this.transform = new Transform(this);
             this.Name = name;
             this.Tag = tag;
+            behaviours = new List<Behaviour>();
         }
-        public GameObject(Transform transform, string name) {
-            this.transform = transform;
+        public GameObject(string name) {
+            this.transform = new Transform(this);
             this.Name = name;
             this.Tag = "Default";
+            behaviours = new List<Behaviour>();
         }
 
-        public GameObject(Transform transform) {
-            this.transform = transform;
+        public GameObject() {
+            this.transform = new Transform(this);
             this.Name = "New GameObject";
             this.Tag = "Default";
+            behaviours = new List<Behaviour>();
         }
 
         public void AddBehaviour<T>() where T : Behaviour {

@@ -1,22 +1,19 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-
-namespace HareEngine {
+﻿namespace HareEngine {
 
     public class Hare {
 
-        private static int sceneIndex = -1;
+        private static Scene _currentScene;
 
         public static Color clearColor = new Color(0.618f, 0.618f, 0.618f);
         public static Window window;
-        public static List<Scene> scenes;
-
         public static Scene currentScene {
             get {
-                if (sceneIndex > 0 && sceneIndex < scenes.Count()) {
-                    return scenes.ElementAt(sceneIndex);
-                } else {
-                    return null;
+                return _currentScene;
+            }
+            set {
+                _currentScene = value;
+                if (window != null) {
+                    window.ReloadScene();
                 }
             }
         }
