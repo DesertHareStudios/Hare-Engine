@@ -48,10 +48,6 @@ namespace HareEngine {
             behaviours = new List<Behaviour>();
         }
 
-        public void AddBehaviour<T>() where T : Behaviour {
-            behaviours.Add((T)(new Behaviour(this)));
-        }
-
         public void AddBehaviour(Behaviour b) {
             behaviours.Add(b);
         }

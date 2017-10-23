@@ -47,6 +47,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Behaviour.cs" />
+    <Compile Include="Behaviours\Audio\AudioSource.cs" />
+    <Compile Include="Behaviours\Audio\AudioListener.cs" />
     <Compile Include="Behaviours\Camera.cs" />
     <Compile Include="Behaviours\Renderers\SpriteRenderer.cs" />
     <Compile Include="Color\Color.cs" />

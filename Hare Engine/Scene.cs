@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 
@@ -25,7 +26,10 @@ namespace HareEngine {
                     Thread t = new Thread(new ThreadStart(() => {
                         try {
                             b.Awake();
-                        } catch { }
+                        } catch (Exception e) {
+                            Console.WriteLine(e.Message);
+                            Console.WriteLine(e.StackTrace);
+                        }
                     }));
                     t.IsBackground = true;
                     threads.Add(t);
@@ -46,7 +50,10 @@ namespace HareEngine {
                             Thread t = new Thread(new ThreadStart(() => {
                                 try {
                                     b.Start();
-                                } catch { }
+                                } catch (Exception e) {
+                                    Console.WriteLine(e.Message);
+                                    Console.WriteLine(e.StackTrace);
+                                }
                             }));
                             t.IsBackground = true;
                             threads.Add(t);
@@ -69,7 +76,10 @@ namespace HareEngine {
                             Thread t = new Thread(new ThreadStart(() => {
                                 try {
                                     b.Update();
-                                } catch { }
+                                } catch (Exception e) {
+                                    Console.WriteLine(e.Message);
+                                    Console.WriteLine(e.StackTrace);
+                                }
                             }));
                             t.IsBackground = true;
                             threads.Add(t);
@@ -92,7 +102,10 @@ namespace HareEngine {
                             Thread t = new Thread(new ThreadStart(() => {
                                 try {
                                     b.FixedUpdate();
-                                } catch { }
+                                } catch (Exception e) {
+                                    Console.WriteLine(e.Message);
+                                    Console.WriteLine(e.StackTrace);
+                                }
                             }));
                             t.IsBackground = true;
                             threads.Add(t);
@@ -115,7 +128,10 @@ namespace HareEngine {
                             Thread t = new Thread(new ThreadStart(() => {
                                 try {
                                     b.LateUpdate();
-                                } catch { }
+                                } catch (Exception e) {
+                                    Console.WriteLine(e.Message);
+                                    Console.WriteLine(e.StackTrace);
+                                }
                             }));
                             t.IsBackground = true;
                             threads.Add(t);
@@ -136,7 +152,10 @@ namespace HareEngine {
                         if (b.Active) {
                             try {
                                 b.OnRender();
-                            } catch { }
+                            } catch (Exception e) {
+                                Console.WriteLine(e.Message);
+                                Console.WriteLine(e.StackTrace);
+                            }
                         }
                     }
                 }

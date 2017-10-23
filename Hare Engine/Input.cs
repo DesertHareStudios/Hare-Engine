@@ -1,4 +1,6 @@
-﻿namespace HareEngine {
+﻿using OpenTK.Input;
+
+namespace HareEngine {
 
     public class Input {
 
