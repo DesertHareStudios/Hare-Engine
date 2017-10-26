@@ -27,6 +27,7 @@ namespace HareEngine {
         }
 
         public void ReloadScene() {
+            Hare.currentScene.Preload?.Invoke();
             init = true;
             //TODO do more changes
         }

@@ -8,6 +8,7 @@ namespace HareEngine {
     public class Scene {
         public string Name = "";
         public List<GameObject> gameObjects;
+        public Hare.f Preload;
 
         public Scene(string name) {
             this.Name = name;
