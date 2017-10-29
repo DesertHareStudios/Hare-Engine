@@ -5,12 +5,35 @@ namespace HareEngine {
 
     public class Transform {
 
+        private Transform _parent;
+        private List<Transform> _childs;
+
         public GameObject gameObject;
-        public Transform parent;
-        public List<Transform> childs;
         public Vector3 position;
         public Quaternion rotation;
         public Vector3 scale;
+
+        public Transform parent {
+            get {
+                return _parent;
+            }
+            set {
+                if (_parent != null) {
+                    _parent._childs.Remove(this);
+                }
+                _parent = value;
+                if (value != null) {
+                    value._childs.Remove(this);
+                    value._childs.Add(this);
+                }
+            }
+        }
+
+        public List<Transform> childs {
+            get {
+                return _childs;
+            }
+        }
 
         public Vector3 RelativePosition {
             get {
@@ -61,7 +84,7 @@ namespace HareEngine {
         public Transform(GameObject gameObject) {
             this.gameObject = gameObject;
             parent = null;
-            childs = new List<Transform>();
+            _childs = new List<Transform>();
             position = new Vector3();
             rotation = Quaternion.Identity;
             scale = new Vector3(1f, 1f, 1f);
