@@ -1,4 +1,5 @@
 ﻿using System;
+using OpenTK;
 
 namespace HareEngine {
 
@@ -62,6 +63,14 @@ namespace HareEngine {
                 return 1f;
             }
             return n * Factorial(n - 1);
+        }
+
+        public static float Magnitude(Vector3 v) {
+            return Mathf.Sqrt(
+                Mathf.Pow(v.X, 2) +
+                Mathf.Pow(v.Y, 2) +
+                Mathf.Pow(v.Z, 2)
+            );
         }
 
         public static float Sin(float a) {

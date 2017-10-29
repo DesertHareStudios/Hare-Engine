@@ -1,5 +1,6 @@
 ﻿using OpenTK.Graphics.OpenGL;
 using OpenTK;
+using System;
 
 namespace HareEngine {
 
@@ -9,28 +10,46 @@ namespace HareEngine {
         public Viewmode viewmode;
         public float renderDistance;
         public float nearClipping;
+        public float fov;
 
         public Camera(GameObject gameObject) : base(gameObject) {
-            renderDistance = 1000f;
+            renderDistance = 100f;
             nearClipping = 0.3f;
             viewmode = Viewmode.Perspective;
             clearColor = new Color(0f, 0f, 0f);
+            fov = 1.3f;
         }
 
         public override void LateUpdate() {
-            //TODO do camera stuff
             Hare.clearColor = clearColor;
             GL.ClearColor(Random.Value, Random.Value, Random.Value, 1f);
-            Matrix4 lookat = Matrix4.LookAt(transform.position.x, transform.position.y, transform.position.z, 256, 0, 256, 0.0f, 1.0f, 0.0f);
+            Matrix4 lookAt = ViewMatrix;
+            GL.MatrixMode(MatrixMode.Modelview);
+            GL.LoadMatrix(ref lookAt);
             switch (viewmode) {
                 case Viewmode.Orthographic:
+                    Matrix4 m = ViewMatrix * Matrix4.CreateOrthographic(Hare.window.Width, Hare.window.Height, nearClipping, renderDistance);
                     GL.MatrixMode(MatrixMode.Projection);
-                    GL.LoadMatrix(ref lookat);
-                    GL.Ortho(0f, Hare.window.Width, 0, Hare.window.Height, nearClipping, renderDistance);
+                    GL.LoadMatrix(ref m);
                     break;
                 case Viewmode.Perspective:
-                    viewmode = Viewmode.Orthographic;
+                    Matrix4 m2 = ViewMatrix * Matrix4.CreatePerspectiveFieldOfView(fov, Hare.window.AspectRatio, nearClipping, renderDistance);
+                    GL.MatrixMode(MatrixMode.Projection);
+                    GL.LoadMatrix(ref m2);
                     break;
+            }
+        }
+
+        public Matrix4 ViewMatrix {
+            get {
+                return Matrix4.LookAt(
+                    transform.position,
+                    transform.position + new Vector3(
+                        Mathf.Sin(transform.rotation.X) * Mathf.Cos(transform.rotation.Y),
+                        Mathf.Sin(transform.rotation.Y),
+                        Mathf.Cos(transform.rotation.X) * Mathf.Cos(transform.rotation.Y)
+                        ),
+                    Vector3.UnitY);
             }
         }
 

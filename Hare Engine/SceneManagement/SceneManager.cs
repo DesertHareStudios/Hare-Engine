@@ -13,20 +13,23 @@ namespace HareEngine.SceneManagement {
             }
         }
 
-        public static void LoadScene(string sceneName) {
+        public static bool LoadScene(string sceneName) {
             foreach (Scene s in scenes) {
                 if (s.Name == sceneName) {
-                    Hare.currentScene = s;
-                    return;
+                    Hare.window.currentScene = s;
+                    return true;
                 }
             }
+            return false;
         }
 
-        public static void LoadScene(int i) {
+        public static bool LoadScene(int i) {
             Scene s = sceneAt(i);
             if (s != null) {
-                Hare.currentScene = s;
+                Hare.window.currentScene = s;
+                return true;
             }
+            return false;
         }
 
         public static Scene sceneAt(int i) {

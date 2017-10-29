@@ -1,4 +1,6 @@
-﻿namespace HareEngine {
+﻿using OpenTK;
+
+namespace HareEngine {
 
     public class Rect {
 
@@ -23,18 +25,18 @@
             Height = 1;
         }
 
-        public Rect(Vector p1, Vector p2) {
-            this.x1 = p1.x;
-            this.y1 = p1.y;
-            this.x2 = p2.x;
-            this.y2 = p2.y;
+        public Rect(Vector3 p1, Vector3 p2) {
+            this.x1 = p1.X;
+            this.y1 = p1.Y;
+            this.x2 = p2.X;
+            this.y2 = p2.Y;
         }
 
-        public Rect(Vector p) {
-            this.x1 = p.x;
-            this.y1 = p.y;
-            this.x2 = p.x;
-            this.y2 = p.y;
+        public Rect(Vector3 p) {
+            this.x1 = p.X;
+            this.y1 = p.Y;
+            this.x2 = p.X;
+            this.y2 = p.Y;
             Width = 1;
             Height = 1;
         }
