@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using OpenTK;
 
 namespace HareEngine {
 
@@ -7,13 +8,13 @@ namespace HareEngine {
         private static List<Rigidbody> bodies;
 
         private Geometry.Line path;
-        private Vector previousPosition;
+        private Vector3 previousPosition;
 
         public float mass = 1f;
         public bool useGravity = true;
         public bool isKinematic = false;
-        public Vector speed = new Vector();
-        public Vector centerOfMass = new Vector();
+        public Vector3 speed = new Vector3();
+        public Vector3 centerOfMass = new Vector3();
         public Geometry.Line Path {
             get {
                 return path;
@@ -42,11 +43,11 @@ namespace HareEngine {
                         case GravityType.Newtonian:
                             foreach (Rigidbody body in bodies) {
                                 if (body != this && body.useGravity) {
-                                    Vector direction = (transform.position + centerOfMass) - (body.transform.position + body.centerOfMass);
-                                    float distance = direction.Magnitude;
+                                    Vector3 direction = (transform.position + centerOfMass) - (body.transform.position + body.centerOfMass);
+                                    float distance = Mathf.Magnitude(direction);
                                     if (distance != 0) {
                                         float magnitude = Physics.Instance.G * (mass * body.mass) / Mathf.Pow(distance, 2);
-                                        body.AddForce(direction.Normal * magnitude);
+                                        body.AddForce(direction.Normalized() * magnitude);
                                     }
                                 }
                             }
@@ -57,7 +58,7 @@ namespace HareEngine {
             path = new Geometry.Line(previousPosition, transform.position);
         }
 
-        public void Translate(Vector to) {
+        public void Translate(Vector3 to) {
             previousPosition = transform.position;
             transform.position += to;
             path = new Geometry.Line(previousPosition, transform.position);
@@ -65,13 +66,13 @@ namespace HareEngine {
 
         public void Translate(float x, float y, float z) {
             previousPosition = transform.position;
-            transform.position += new Vector(x, y, z);
+            transform.position += new Vector3(x, y, z);
             path = new Geometry.Line(previousPosition, transform.position);
         }
 
         public void Translate(float x, float y) {
             previousPosition = transform.position;
-            transform.position += new Vector(x, y, 0f);
+            transform.position += new Vector3(x, y, 0f);
             path = new Geometry.Line(previousPosition, transform.position);
         }
 
@@ -83,13 +84,13 @@ namespace HareEngine {
             bodies.Remove(this);
         }
 
-        public void AddForce(Vector force) {
+        public void AddForce(Vector3 force) {
             //TODO add force
             speed += force;
         }
 
         public void AddForce(float x, float y, float z) {
-            AddForce(new Vector(x, y, z));
+            AddForce(new Vector3(x, y, z));
         }
 
     }

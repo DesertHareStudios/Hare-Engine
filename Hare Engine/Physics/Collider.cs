@@ -9,7 +9,6 @@ namespace HareEngine {
         private Rigidbody rb;
 
         public bool isTrigger = false;
-        public Geometry.GeoNode points;
 
         public Collider(GameObject gameObject) : base(gameObject) { }
 
@@ -19,30 +18,7 @@ namespace HareEngine {
         }
 
         public override void FixedUpdate() {
-            if (!isTrigger && rb != null) {
-                foreach (Collider col in colliders) {
-                    if (col != this) {
-                        Geometry.GeoNode node = points;
-                        bool colDetected = false;
-                        while (node.Next != null && !colDetected) {
-                            Vector point = (node.position + transform.position).Rotated(transform.rotation);
-                            float er = col.points.EnteringRatio(point, col.transform.position, col.transform.rotation);
-                            if (er > 0) {
-                                colDetected = true;
-                                if (col.isTrigger) {
-                                    gameObject.OnTriggerEnter(col);
-                                } else {
-                                    //TODO get collision details
-                                    Collision collision = new Collision();
-                                    gameObject.OnCollisionEnter(collision);
-                                }
-                            } else {
-                                node = node.Next;
-                            }
-                        }
-                    }
-                }
-            }
+            //TODO detect collision
         }
 
         public override void OnEnable() {

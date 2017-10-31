@@ -46,15 +46,16 @@
     <Reference Include="System.Drawing" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\Asset.cs" />
+    <Compile Include="Assets\AudioClip.cs" />
+    <Compile Include="Assets\Texture.cs" />
     <Compile Include="Behaviour.cs" />
     <Compile Include="Behaviours\Audio\AudioSource.cs" />
     <Compile Include="Behaviours\Audio\AudioListener.cs" />
     <Compile Include="Behaviours\Camera.cs" />
     <Compile Include="Behaviours\Renderers\SpriteRenderer.cs" />
     <Compile Include="Color\Color.cs" />
-    <Compile Include="FileLoader.cs" />
     <Compile Include="GameObject.cs" />
-    <Compile Include="Geometry\GeoNode.cs" />
     <Compile Include="Geometry\Line.cs" />
     <Compile Include="Hare.cs" />
     <Compile Include="Input.cs" />
@@ -64,11 +65,10 @@
     <Compile Include="Physics\Physics.cs" />
     <Compile Include="Physics\Raycast.cs" />
     <Compile Include="Physics\Rigidbody.cs" />
-    <Compile Include="Quaternion.cs" />
-    <Compile Include="Physics\Vector.cs" />
     <Compile Include="Random.cs" />
     <Compile Include="Geometry\Rect.cs" />
     <Compile Include="Scene.cs" />
+    <Compile Include="SceneManagement\SceneManager.cs" />
     <Compile Include="Time.cs" />
     <Compile Include="Transform\Transform.cs" />
     <Compile Include="Window.cs" />

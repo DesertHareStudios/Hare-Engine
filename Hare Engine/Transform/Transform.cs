@@ -1,17 +1,41 @@
 ﻿using System.Collections.Generic;
+using OpenTK;
 
 namespace HareEngine {
 
     public class Transform {
 
-        public GameObject gameObject;
-        public Transform parent;
-        public List<Transform> childs;
-        public Vector position;
-        public Quaternion rotation;
-        public Vector scale;
+        private Transform _parent;
+        private List<Transform> _childs;
 
-        public Vector RelativePosition {
+        public GameObject gameObject;
+        public Vector3 position;
+        public Quaternion rotation;
+        public Vector3 scale;
+
+        public Transform parent {
+            get {
+                return _parent;
+            }
+            set {
+                if (_parent != null) {
+                    _parent._childs.Remove(this);
+                }
+                _parent = value;
+                if (value != null) {
+                    value._childs.Remove(this);
+                    value._childs.Add(this);
+                }
+            }
+        }
+
+        public List<Transform> childs {
+            get {
+                return _childs;
+            }
+        }
+
+        public Vector3 RelativePosition {
             get {
                 if (parent == null) {
                     return position;
@@ -28,13 +52,7 @@ namespace HareEngine {
             }
         }
 
-        public Vector RotatedPosition {
-            get {
-                return position.Rotated(rotation);
-            }
-        }
-
-        public Vector AbsoluteScale {
+        public Vector3 AbsoluteScale {
             get {
                 if (parent == null) {
                     return scale;
@@ -51,25 +69,37 @@ namespace HareEngine {
             }
         }
 
+        public Vector3 forward {
+            get {
+                return new Vector3((float)Mathf.Sin((float)rotation.X), 0, (float)Mathf.Cos((float)rotation.X));
+            }
+        }
+
+        public Vector3 right {
+            get {
+                return new Vector3(-forward.Z, 0, forward.X);
+            }
+        }
+
         public Transform(GameObject gameObject) {
             this.gameObject = gameObject;
             parent = null;
-            childs = new List<Transform>();
-            position = new Vector();
+            _childs = new List<Transform>();
+            position = new Vector3();
             rotation = Quaternion.Identity;
-            scale = new Vector(1f, 1f, 1f);
+            scale = new Vector3(1f, 1f, 1f);
         }
 
-        public void Translate(Vector to) {
+        public void Translate(Vector3 to) {
             position += to;
         }
 
         public void Translate(float x, float y, float z) {
-            position += new Vector(x, y, z);
+            position += new Vector3(x, y, z);
         }
 
         public void Translate(float x, float y) {
-            position += new Vector(x, y, 0f);
+            position += new Vector3(x, y, 0f);
         }
 
     }

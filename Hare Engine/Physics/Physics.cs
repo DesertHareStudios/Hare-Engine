@@ -4,7 +4,7 @@
 
         private static Physics instance;
 
-        public static Physics Instance{
+        public static Physics Instance {
             get {
                 if (instance == null) {
                     instance = new Physics();
