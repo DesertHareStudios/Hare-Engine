@@ -15,8 +15,6 @@
             window.Run(60);
         }
 
-        public delegate void f();
-
     }
 
 }

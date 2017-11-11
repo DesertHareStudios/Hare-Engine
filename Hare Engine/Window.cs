@@ -51,6 +51,7 @@ namespace HareEngine {
         protected override void OnResize(EventArgs e) {
             base.OnResize(e);
             GL.Viewport(X, Y, Width, Height);
+            GL.Ortho(Width / 2, Width / 2, -Height / 2, Height / 2, -1, 1);
         }
 
         protected override void OnUpdateFrame(FrameEventArgs e) {

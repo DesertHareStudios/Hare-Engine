@@ -86,7 +86,7 @@ namespace HareEngine {
 
         public void AddForce(Vector3 force) {
             //TODO add force
-            speed += force;
+            speed += (force / mass);
         }
 
         public void AddForce(float x, float y, float z) {

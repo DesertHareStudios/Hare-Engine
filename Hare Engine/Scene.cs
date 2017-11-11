@@ -7,8 +7,8 @@ namespace HareEngine {
 
     public class Scene {
         public string Name = "";
-        public List<GameObject> gameObjects;
-        public Hare.f Preload;
+        public List<GameObject> gameObjects = new List<GameObject>();
+        public Action Preload;
 
         public Scene(string name) {
             this.Name = name;
@@ -21,6 +21,10 @@ namespace HareEngine {
         }
 
         public void Awake() {
+            if (gameObjects == null) {
+                gameObjects = new List<GameObject>();
+                return;
+            }
             List<Thread> threads = new List<Thread>();
             foreach (GameObject go in gameObjects) {
                 foreach (Behaviour b in go.behaviours) {
@@ -43,6 +47,10 @@ namespace HareEngine {
         }
 
         public void Start() {
+            if (gameObjects == null) {
+                gameObjects = new List<GameObject>();
+                return;
+            }
             List<Thread> threads = new List<Thread>();
             foreach (GameObject go in gameObjects) {
                 if (go.Active) {
@@ -69,6 +77,10 @@ namespace HareEngine {
         }
 
         public void Update() {
+            if (gameObjects == null) {
+                gameObjects = new List<GameObject>();
+                return;
+            }
             List<Thread> threads = new List<Thread>();
             foreach (GameObject go in gameObjects) {
                 if (go.Active) {
@@ -95,6 +107,10 @@ namespace HareEngine {
         }
 
         public void FixedUpdate() {
+            if (gameObjects == null) {
+                gameObjects = new List<GameObject>();
+                return;
+            }
             List<Thread> threads = new List<Thread>();
             foreach (GameObject go in gameObjects) {
                 if (go.Active) {
@@ -121,6 +137,10 @@ namespace HareEngine {
         }
 
         public void LateUpdate() {
+            if (gameObjects == null) {
+                gameObjects = new List<GameObject>();
+                return;
+            }
             List<Thread> threads = new List<Thread>();
             foreach (GameObject go in gameObjects) {
                 if (go.Active) {
@@ -147,6 +167,24 @@ namespace HareEngine {
         }
 
         public void Render() {
+            if (gameObjects == null) {
+                gameObjects = new List<GameObject>();
+                return;
+            }
+            foreach (GameObject go in gameObjects) {
+                if (go.Active) {
+                    foreach (Behaviour b in go.behaviours) {
+                        if (b.Active) {
+                            try {
+                                b.OnPrerender();
+                            } catch (Exception e) {
+                                Console.WriteLine(e.Message);
+                                Console.WriteLine(e.StackTrace);
+                            }
+                        }
+                    }
+                }
+            }
             foreach (GameObject go in gameObjects) {
                 if (go.Active) {
                     foreach (Behaviour b in go.behaviours) {

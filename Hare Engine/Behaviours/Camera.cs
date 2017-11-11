@@ -20,9 +20,8 @@ namespace HareEngine {
             fov = 1.3f;
         }
 
-        public override void LateUpdate() {
+        public override void OnPrerender() {
             Hare.clearColor = clearColor;
-            GL.ClearColor(Random.Value, Random.Value, Random.Value, 1f);
             Matrix4 lookAt = ViewMatrix;
             GL.MatrixMode(MatrixMode.Modelview);
             GL.LoadMatrix(ref lookAt);

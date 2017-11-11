@@ -28,11 +28,7 @@ namespace HareEngine {
             }
         }
 
-        public Texture() : base("") {
-            id = -1;
-        }
-
-        public Texture(string filepath) : base(filepath) {
+        public Texture(string filepath, string name) : base(filepath, name) {
             try {
                 img = new Bitmap(filepath);
                 id = GL.GenTexture();
