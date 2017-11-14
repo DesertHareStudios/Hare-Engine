@@ -21,18 +21,18 @@ namespace HareEngine {
         }
 
         public SpriteRenderer(GameObject gameObject) : base(gameObject) {
+            sprite = new Texture("", "");
             tint = new Color(1f, 1f, 1f);
         }
 
         public override void OnRender() {
             GL.Disable(EnableCap.Lighting);
+            GL.Color4(tint.r, tint.g, tint.b, tint.a);
             if (sprite != null) {
                 GL.Enable(EnableCap.Texture2D);
                 GL.Enable(EnableCap.Blend);
                 GL.BlendFunc(BlendingFactorSrc.SrcAlpha, BlendingFactorDest.OneMinusSrcAlpha);
                 GL.BindTexture(TextureTarget.Texture2D, sprite.ID);
-            } else {
-                GL.Color4(tint.r, tint.g, tint.b, tint.a);
             }
             GL.Begin(PrimitiveType.Quads);
             if (sprite != null) {

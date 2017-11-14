@@ -16,7 +16,7 @@ namespace HareEngine {
             renderDistance = 100f;
             nearClipping = 0.3f;
             viewmode = Viewmode.Perspective;
-            clearColor = new Color(0f, 0f, 0f);
+            clearColor = new Color(0f, 0.618f, 1f);
             fov = 1.3f;
         }
 
@@ -43,11 +43,12 @@ namespace HareEngine {
             get {
                 return Matrix4.LookAt(
                     transform.position,
-                    transform.position + new Vector3(
-                        Mathf.Sin(transform.rotation.X) * Mathf.Cos(transform.rotation.Y),
-                        Mathf.Sin(transform.rotation.Y),
-                        Mathf.Cos(transform.rotation.X) * Mathf.Cos(transform.rotation.Y)
-                        ),
+                    transform.position + transform.forward,
+                    //transform.position + new Vector3(
+                    //    Mathf.Sin(transform.rotation.X) * Mathf.Cos(transform.rotation.Y),
+                    //    Mathf.Sin(transform.rotation.Y),
+                    //    Mathf.Cos(transform.rotation.X) * Mathf.Cos(transform.rotation.Y)
+                    //    ),
                     Vector3.UnitY);
             }
         }
