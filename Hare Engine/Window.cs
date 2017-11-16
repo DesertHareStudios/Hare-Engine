@@ -83,7 +83,6 @@ namespace HareEngine {
             Time.deltaTime = (float)e.Time;
             Time.time += Time.deltaTime;
             float dump = Random.Value;
-            GL.ClearColor(Hare.clearColor.r, Hare.clearColor.g, Hare.clearColor.b, Hare.clearColor.a);
             GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
             if (currentScene != null) {
                 if (init) {

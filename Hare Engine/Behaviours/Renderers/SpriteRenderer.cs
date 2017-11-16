@@ -1,73 +1,63 @@
-﻿using OpenTK.Graphics.OpenGL;
-using System;
+﻿using System;
+using OpenTK;
+using OpenTK.Graphics.OpenGL;
 
 namespace HareEngine {
 
-    public class SpriteRenderer : Behaviour {
-
-        public Texture sprite;
-        public Color tint;
+    public class SpriteRenderer : Renderer {
 
         public string TextureName {
             get {
-                return sprite.Name;
+                return texture.Name;
             }
             set {
                 Texture tex = (Texture)Asset.Get(value);
                 if (tex != null) {
-                    sprite = tex;
+                    texture = tex;
                 }
             }
         }
 
+        public override Matrix4 ModelMatrix {
+            get {
+                return Matrix4.CreateScale(transform.AbsoluteScale) * Matrix4.CreateFromQuaternion(transform.rotation) * Matrix4.CreateTranslation(transform.position);
+            }
+        }
+
         public SpriteRenderer(GameObject gameObject) : base(gameObject) {
-            sprite = new Texture("", "");
+            vertexType = PrimitiveType.Quads;
+            texture = new Texture("", "");
             tint = new Color(1f, 1f, 1f);
         }
 
-        public override void OnRender() {
-            GL.Disable(EnableCap.Lighting);
-            GL.Color4(tint.r, tint.g, tint.b, tint.a);
-            if (sprite != null) {
-                GL.Enable(EnableCap.Texture2D);
-                GL.Enable(EnableCap.Blend);
-                GL.BlendFunc(BlendingFactorSrc.SrcAlpha, BlendingFactorDest.OneMinusSrcAlpha);
-                GL.BindTexture(TextureTarget.Texture2D, sprite.ID);
-            }
-            GL.Begin(PrimitiveType.Quads);
-            if (sprite != null) {
-                GL.TexCoord2(1, 1);
-            }
-            GL.Vertex2(
-                    transform.position.X + (transform.AbsoluteScale.X / 2f),
-                    transform.position.Y - (transform.AbsoluteScale.Y / 2f)
-                );
-            if (sprite != null) {
-                GL.TexCoord2(1, 0);
-            }
-            GL.Vertex2(
-                    transform.position.X + (transform.AbsoluteScale.X / 2f),
-                    transform.position.Y + (transform.AbsoluteScale.Y / 2f)
-                );
-            if (sprite != null) {
-                GL.TexCoord2(0, 0);
-            }
-            GL.Vertex2(
-                    transform.position.X - (transform.AbsoluteScale.X / 2f),
-                    transform.position.Y + (transform.AbsoluteScale.Y / 2f)
-                );
-            if (sprite != null) {
-                GL.TexCoord2(0, 1);
-            }
-            GL.Vertex2(
-                    transform.position.X - (transform.AbsoluteScale.X / 2f),
-                    transform.position.Y - (transform.AbsoluteScale.Y / 2f)
-                );
-            GL.Color4(1f, 1f, 1f, 1f);
-            GL.End();
-            GL.Disable(EnableCap.Texture2D);
-            GL.BindTexture(TextureTarget.Texture2D, 0);
-            GL.Enable(EnableCap.Lighting);
+        public override Vector2[] GetUVs() {
+            return new Vector2[] {
+                new Vector2(1, -1),
+                new Vector2(1, 1),
+                new Vector2(-1, 1),
+                new Vector2(-1, -1)
+            };
+        }
+
+        public override Vector3[] GetVerts() {
+            return new Vector3[] {
+                new Vector3(0.5f, -0.5f, 0f),
+                new Vector3(0.5f, 0.5f, 0f),
+                new Vector3(-0.5f, 0.5f, 0f),
+                new Vector3(-0.5f, -0.5f, 0f)
+            };
+        }
+
+        public override EnableCap[] GetCaps() {
+            return new EnableCap[] {
+                EnableCap.Texture2D
+            };
+        }
+
+        public override EnableCap[] GetDisabledCaps() {
+            return new EnableCap[] {
+                EnableCap.Lighting
+            };
         }
     }
 

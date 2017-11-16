@@ -12,19 +12,15 @@ namespace HareEngine {
 
         public bool Active {
             get {
+                if (_active) {
+                    if (transform.parent != null) {
+                        return transform.parent.gameObject.Active;
+                    }
+                }
                 return _active;
             }
             set {
-                if (transform.parent == null) {
-                    _active = value;
-                } else {
-                    if (transform.parent.gameObject.Active) {
-                        _active = value;
-                        foreach (Transform t in transform.childs) {
-                            t.gameObject.Active = value;
-                        }
-                    }
-                }
+                _active = value;
             }
         }
 

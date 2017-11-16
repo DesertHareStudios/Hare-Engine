@@ -71,13 +71,31 @@ namespace HareEngine {
 
         public Vector3 forward {
             get {
-                return new Vector3((float)Mathf.Sin((float)rotation.X), 0, (float)Mathf.Cos((float)rotation.X));
+                return rotation.Xyz;
             }
         }
 
         public Vector3 right {
             get {
                 return new Vector3(-forward.Z, 0, forward.X);
+            }
+        }
+
+        public Vector3 left {
+            get {
+                return -right;
+            }
+        }
+
+        public Vector3 up {
+            get {
+                return Mathf.ApplyRotation(new Vector3(0f, -forward.Z, forward.Y), rotation);
+            }
+        }
+
+        public Vector3 down {
+            get {
+                return -up;
             }
         }
 

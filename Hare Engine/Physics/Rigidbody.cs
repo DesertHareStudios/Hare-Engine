@@ -44,7 +44,7 @@ namespace HareEngine {
                             foreach (Rigidbody body in bodies) {
                                 if (body != this && body.useGravity) {
                                     Vector3 direction = (transform.position + centerOfMass) - (body.transform.position + body.centerOfMass);
-                                    float distance = Mathf.Magnitude(direction);
+                                    float distance = direction.Length;
                                     if (distance != 0) {
                                         float magnitude = Physics.Instance.G * (mass * body.mass) / Mathf.Pow(distance, 2);
                                         body.AddForce(direction.Normalized() * magnitude);

@@ -4,7 +4,7 @@ namespace HareEngine {
 
     public class Asset {
 
-        private static List<Asset> assets;
+        private static List<Asset> assets = new List<Asset>();
 
         private string fp;
 

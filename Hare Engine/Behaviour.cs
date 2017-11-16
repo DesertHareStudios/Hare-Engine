@@ -42,8 +42,6 @@
         public virtual void FixedUpdate() { }
         public virtual void OnEnable() { }
         public virtual void OnDisable() { }
-        public virtual void OnPrerender() { }
-        public virtual void OnRender() { }
         public virtual void OnCollisionEnter(Collision collision) { }
         public virtual void OnCollisionExit(Collision collision) { }
         public virtual void OnTriggerEnter(Collider collider) { }

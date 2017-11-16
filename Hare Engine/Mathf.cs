@@ -65,12 +65,10 @@ namespace HareEngine {
             return n * Factorial(n - 1);
         }
 
-        public static float Magnitude(Vector3 v) {
-            return Mathf.Sqrt(
-                Mathf.Pow(v.X, 2) +
-                Mathf.Pow(v.Y, 2) +
-                Mathf.Pow(v.Z, 2)
-            );
+        public static Vector3 ApplyRotation(Vector3 vector, Quaternion rotation) {
+            return 2f * Vector3.Dot(rotation.Xyz, vector) * rotation.Xyz +
+                (rotation.W * rotation.W - Vector3.Dot(rotation.Xyz, vector)) * vector +
+                2f * rotation.W * Vector3.Cross(rotation.Xyz, vector);
         }
 
         public static float Sin(float a) {
