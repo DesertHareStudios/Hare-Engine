@@ -75,9 +75,15 @@ namespace HareEngine {
             }
         }
 
+        public Vector3 backward {
+            get {
+                return -forward;
+            }
+        }
+
         public Vector3 right {
             get {
-                return new Vector3(-forward.Z, 0, forward.X);
+                return Mathf.ApplyRotation(new Vector3(-forward.Z, 0, forward.X), rotation);
             }
         }
 
@@ -89,7 +95,8 @@ namespace HareEngine {
 
         public Vector3 up {
             get {
-                return Mathf.ApplyRotation(new Vector3(0f, -forward.Z, forward.Y), rotation);
+                //return rotation.Xyz * Vector3.UnitY;
+                return Vector3.UnitY;
             }
         }
 

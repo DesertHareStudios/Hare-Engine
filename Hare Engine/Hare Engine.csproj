@@ -36,7 +36,6 @@
   </PropertyGroup>
   <ItemGroup>
     <None Include="App.config" />
-    <None Include="EngineClassDiagram.cd" />
     <None Include="OpenTK.dll.config" />
     <None Include="packages.config" />
   </ItemGroup>
@@ -49,6 +48,7 @@
   <ItemGroup>
     <Compile Include="Assets\Asset.cs" />
     <Compile Include="Assets\AudioClip.cs" />
+    <Compile Include="Assets\Shader.cs" />
     <Compile Include="Assets\Texture.cs" />
     <Compile Include="Behaviour.cs" />
     <Compile Include="Behaviours\Audio\AudioSource.cs" />
@@ -57,6 +57,8 @@
     <Compile Include="Behaviours\Renderers\Renderer.cs" />
     <Compile Include="Behaviours\Renderers\SpriteRenderer.cs" />
     <Compile Include="Color\Color.cs" />
+    <Compile Include="Debug\Debug.cs" />
+    <Compile Include="Fields\Range.cs" />
     <Compile Include="GameObject.cs" />
     <Compile Include="Geometry\Line.cs" />
     <Compile Include="Hare.cs" />

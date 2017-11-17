@@ -1,4 +1,6 @@
-﻿namespace HareEngine {
+﻿using OpenTK;
+
+namespace HareEngine {
 
     public class Color {
 
@@ -30,11 +32,45 @@
 
         public static Color Lerp(Color from, Color to, float t) {
             return new Color(
-                from.r + (to.r - from.r) * t,
-                from.g + (to.g - from.g) * t,
-                from.b + (to.b - from.b) * t,
-                from.a + (to.a - from.a) * t
+                Mathf.Clamp(from.r + (to.r - from.r) * t, 0f, 1f),
+                Mathf.Clamp(from.g + (to.g - from.g) * t, 0f, 1f),
+                Mathf.Clamp(from.b + (to.b - from.b) * t, 0f, 1f),
+                Mathf.Clamp(from.a + (to.a - from.a) * t, 0f, 1f)
                 );
+        }
+
+        public static Color Lerp(Color[] colors, float t) {
+            float rt = ((float)colors.Length - 1f) * t;
+            int a = (int)Mathf.Floor(rt);
+            int b = (int)Mathf.Ceiling(rt);
+            return Lerp(
+                    colors[a],
+                    colors[b],
+                    rt - (float)a
+                );
+        }
+
+        public Vector3 Vector3 {
+            get {
+                return new Vector3(r, g, b);
+            }
+            set {
+                r = value.X;
+                g = value.Y;
+                b = value.Z;
+            }
+        }
+
+        public Vector4 Vector4 {
+            get {
+                return new Vector4(r, g, b, a);
+            }
+            set {
+                r = value.X;
+                g = value.Y;
+                b = value.Z;
+                a = value.W;
+            }
         }
 
         public static Color operator +(Color a, Color b) {

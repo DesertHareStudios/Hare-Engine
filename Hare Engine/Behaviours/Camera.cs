@@ -1,8 +1,17 @@
-﻿using OpenTK;
+﻿using System.Collections.Generic;
+using OpenTK;
 
 namespace HareEngine {
 
     public class Camera : Behaviour {
+
+        private static List<Camera> cameras = new List<Camera>();
+
+        public static List<Camera> All {
+            get {
+                return cameras;
+            }
+        }
 
         public Color clearColor;
         public Viewmode viewmode;
@@ -18,22 +27,27 @@ namespace HareEngine {
             fov = 70f;
         }
 
+        public override void OnEnable() {
+            base.OnEnable();
+            cameras.Add(this);
+        }
+
+        public override void OnDisable() {
+            base.OnDisable();
+            cameras.Remove(this);
+        }
+
         public Matrix4 ProjectionMatrix {
             get {
-                Matrix4 output;
                 switch (viewmode) {
                     case Viewmode.Orthographic:
-                        output = ViewMatrix * Matrix4.CreateOrthographic(Hare.window.Width, Hare.window.Height, nearClipping, renderDistance);
-                        break;
+                        return Matrix4.CreateOrthographic(Hare.window.Width, Hare.window.Height, nearClipping, renderDistance);
                     case Viewmode.Perspective:
-                        output = ViewMatrix * Matrix4.CreatePerspectiveFieldOfView(Mathf.ToRadians(fov), Hare.window.AspectRatio, nearClipping, renderDistance);
-                        break;
+                        return Matrix4.CreatePerspectiveFieldOfView(Mathf.ToRadians(fov), Hare.window.AspectRatio, nearClipping, renderDistance);
                     default:
                         viewmode = Viewmode.Orthographic;
-                        output = ProjectionMatrix;
-                        break;
+                        return ProjectionMatrix;
                 }
-                return output;
             }
         }
 

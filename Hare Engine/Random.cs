@@ -16,7 +16,7 @@
         }
 
         public static bool Probably(float probability) {
-            return Value <= probability;
+            return Value < probability;
         }
 
         public static bool Probably() {

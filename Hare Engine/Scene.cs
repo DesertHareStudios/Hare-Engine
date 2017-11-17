@@ -11,42 +11,9 @@ namespace HareEngine {
         public string Name = "";
         public List<GameObject> gameObjects = new List<GameObject>();
         public Action Preload;
-
-        protected List<Renderer> renderers {
-            get {
-                List<Renderer> output = new List<Renderer>();
-                foreach (GameObject go in gameObjects) {
-                    if (go.Active) {
-                        foreach (Behaviour b in go.behaviours) {
-                            if (b.Active) {
-                                if (b.GetType().IsSubclassOf(typeof(Renderer))) {
-                                    output.Add((Renderer)b);
-                                }
-                            }
-                        }
-                    }
-                }
-                return output;
-            }
-        }
-
-        protected List<Camera> cameras {
-            get {
-                List<Camera> output = new List<Camera>();
-                foreach (GameObject go in gameObjects) {
-                    if (go.Active) {
-                        foreach (Behaviour b in go.behaviours) {
-                            if (b.Active) {
-                                if (b.GetType().IsSubclassOf(typeof(Camera)) || b.GetType() == typeof(Camera)) {
-                                    output.Add((Camera)b);
-                                }
-                            }
-                        }
-                    }
-                }
-                return output;
-            }
-        }
+        Vector3[] vertdata;
+        Vector4[] coldata;
+        int[] indicedata;
 
         public Scene(string name) {
             this.Name = name;
@@ -70,8 +37,8 @@ namespace HareEngine {
                         try {
                             b.Awake();
                         } catch (Exception e) {
-                            Console.WriteLine(e.Message);
-                            Console.WriteLine(e.StackTrace);
+                            Debug.Error(e.Message);
+                            Debug.Error(e.StackTrace);
                         }
                     }));
                     t.IsBackground = true;
@@ -98,8 +65,8 @@ namespace HareEngine {
                                 try {
                                     b.Start();
                                 } catch (Exception e) {
-                                    Console.WriteLine(e.Message);
-                                    Console.WriteLine(e.StackTrace);
+                                    Debug.Error(e.Message);
+                                    Debug.Error(e.StackTrace);
                                 }
                             }));
                             t.IsBackground = true;
@@ -128,8 +95,8 @@ namespace HareEngine {
                                 try {
                                     b.Update();
                                 } catch (Exception e) {
-                                    Console.WriteLine(e.Message);
-                                    Console.WriteLine(e.StackTrace);
+                                    Debug.Error(e.Message);
+                                    Debug.Error(e.StackTrace);
                                 }
                             }));
                             t.IsBackground = true;
@@ -158,8 +125,8 @@ namespace HareEngine {
                                 try {
                                     b.FixedUpdate();
                                 } catch (Exception e) {
-                                    Console.WriteLine(e.Message);
-                                    Console.WriteLine(e.StackTrace);
+                                    Debug.Error(e.Message);
+                                    Debug.Error(e.StackTrace);
                                 }
                             }));
                             t.IsBackground = true;
@@ -188,8 +155,8 @@ namespace HareEngine {
                                 try {
                                     b.LateUpdate();
                                 } catch (Exception e) {
-                                    Console.WriteLine(e.Message);
-                                    Console.WriteLine(e.StackTrace);
+                                    Debug.Error(e.Message);
+                                    Debug.Error(e.StackTrace);
                                 }
                             }));
                             t.IsBackground = true;
@@ -209,69 +176,54 @@ namespace HareEngine {
                 gameObjects = new List<GameObject>();
                 return;
             }
-            foreach (Camera cam in cameras) {
-                GL.ClearColor(cam.clearColor.r, cam.clearColor.g, cam.clearColor.b, 1f);
-                foreach (Renderer r in renderers) {
-                    r.ModelViewProjectionMatrix = r.ModelMatrix * cam.ProjectionMatrix;
-                    GL.MatrixMode(MatrixMode.Modelview);
-                    GL.LoadMatrix(ref r.ModelViewProjectionMatrix);
-                    GL.MatrixMode(MatrixMode.Projection);
-                    Matrix4 proj = cam.ProjectionMatrix;
-                    GL.LoadMatrix(ref proj);
-                    GL.Color4(r.tint.r, r.tint.g, r.tint.b, r.tint.a);
-                    foreach (EnableCap ec in r.GetCaps()) {
-                        GL.Enable(ec);
-                    }
-                    foreach (EnableCap ec in r.GetDisabledCaps()) {
-                        GL.Disable(ec);
-                    }
-                    Vector3[] verts = r.GetVerts();
-                    Vector2[] uvs = r.GetUVs();
-                    GL.Begin(r.vertexType);
-                    for (int i = 0; i < verts.Length; i++) {
-                        try {
-                            if (r.texture != null) {
-                                GL.TexCoord2(uvs[i]);
-                            }
-                        } catch { } // Less UVs than verts
-                        GL.Vertex3(verts[i]);
-                    }
-                    foreach (EnableCap ec in r.GetCaps()) {
-                        GL.Disable(ec);
-                    }
-                    foreach (EnableCap ec in r.GetDisabledCaps()) {
-                        GL.Enable(ec);
-                    }
+
+            List<Vector3> verts = new List<Vector3>();
+            List<int> inds = new List<int>();
+            List<Vector4> colors = new List<Vector4>();
+
+            int vertcount = 0;
+            foreach (Renderer v in Renderer.All) {
+                verts.AddRange(v.GetVerts().ToList());
+                inds.AddRange(v.GetIndices(vertcount).ToList());
+                colors.AddRange(v.GetColors().ToList());
+                vertcount += v.VertCount;
+            }
+
+            vertdata = verts.ToArray();
+            indicedata = inds.ToArray();
+            coldata = colors.ToArray();
+
+            GL.BindBuffer(BufferTarget.ArrayBuffer, Hare.vbo_position);
+            GL.BufferData<Vector3>(BufferTarget.ArrayBuffer, (IntPtr)(vertdata.Length * Vector3.SizeInBytes), vertdata, BufferUsageHint.StaticDraw);
+            GL.VertexAttribPointer(Shader.attribute_vpos, 3, VertexAttribPointerType.Float, false, 0, 0);
+
+            GL.BindBuffer(BufferTarget.ArrayBuffer, Hare.vbo_color);
+            GL.BufferData<Vector4>(BufferTarget.ArrayBuffer, (IntPtr)(coldata.Length * Vector4.SizeInBytes), coldata, BufferUsageHint.StaticDraw);
+            GL.VertexAttribPointer(Shader.attribute_vcol, 3, VertexAttribPointerType.Float, true, 0, 0);
+
+            GL.UseProgram(Shader.defaultProgramID);
+
+            GL.BindBuffer(BufferTarget.ArrayBuffer, 0);
+
+            GL.BindBuffer(BufferTarget.ElementArrayBuffer, Hare.ibo_elements);
+            GL.BufferData(BufferTarget.ElementArrayBuffer, (IntPtr)(indicedata.Length * sizeof(int)), indicedata, BufferUsageHint.StaticDraw);
+
+
+            GL.EnableVertexAttribArray(Shader.attribute_vpos);
+            GL.EnableVertexAttribArray(Shader.attribute_vcol);
+            int indiceat = 0;
+            foreach (Camera cam in Camera.All) {
+                Hare.clearColor = cam.clearColor;
+                foreach (Renderer r in Renderer.All) {
+                    r.MVPMatrix = r.ModelMatrix * cam.ViewMatrix * cam.ProjectionMatrix;
+                    GL.UniformMatrix4(Shader.uniform_mview, false, ref r.MVPMatrix);
+                    GL.DrawElements(BeginMode.Triangles, r.IndiceCount, DrawElementsType.UnsignedInt, indiceat * sizeof(uint));
+                    indiceat += r.IndiceCount;
                 }
             }
-            //foreach (GameObject go in gameObjects) {
-            //    if (go.Active) {
-            //        foreach (Behaviour b in go.behaviours) {
-            //            if (b.Active) {
-            //                try {
-            //                    b.OnPrerender();
-            //                } catch (Exception e) {
-            //                    Console.WriteLine(e.Message);
-            //                    Console.WriteLine(e.StackTrace);
-            //                }
-            //            }
-            //        }
-            //    }
-            //}
-            //foreach (GameObject go in gameObjects) {
-            //    if (go.Active) {
-            //        foreach (Behaviour b in go.behaviours) {
-            //            if (b.Active) {
-            //                try {
-            //                    b.OnRender();
-            //                } catch (Exception e) {
-            //                    Console.WriteLine(e.Message);
-            //                    Console.WriteLine(e.StackTrace);
-            //                }
-            //            }
-            //        }
-            //    }
-            //}
+            GL.DisableVertexAttribArray(Shader.attribute_vpos);
+            GL.DisableVertexAttribArray(Shader.attribute_vcol);
+            GL.Flush();
         }
 
     }

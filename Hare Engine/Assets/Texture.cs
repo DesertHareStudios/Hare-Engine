@@ -43,7 +43,7 @@ namespace HareEngine {
                 GL.GenerateMipmap(GenerateMipmapTarget.Texture2D);
                 GL.BindTexture(TextureTarget.Texture2D, 0);
             } catch (Exception e) {
-                Console.WriteLine(e.Message);
+                Debug.Error(e.Message);
                 id = -1;
             }
         }

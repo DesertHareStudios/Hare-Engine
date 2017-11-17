@@ -6,6 +6,8 @@ namespace HareEngine {
 
     public class SpriteRenderer : Renderer {
 
+        public Color tint;
+
         public string TextureName {
             get {
                 return texture.Name;
@@ -18,46 +20,63 @@ namespace HareEngine {
             }
         }
 
-        public override Matrix4 ModelMatrix {
-            get {
-                return Matrix4.CreateScale(transform.AbsoluteScale) * Matrix4.CreateFromQuaternion(transform.rotation) * Matrix4.CreateTranslation(transform.position);
-            }
+        public SpriteRenderer(GameObject gameObject) : base(gameObject) {
+            texture = new Texture("", "");
+            tint = new Color(1f, 1f, 1f, 1f);
         }
 
-        public SpriteRenderer(GameObject gameObject) : base(gameObject) {
-            vertexType = PrimitiveType.Quads;
-            texture = new Texture("", "");
-            tint = new Color(1f, 1f, 1f);
+        public override void OnEnable() {
+            renderers.Add(this);
+        }
+
+        public override void OnDisable() {
+            renderers.Remove(this);
         }
 
         public override Vector2[] GetUVs() {
-            return new Vector2[] {
-                new Vector2(1, -1),
+            Vector2[] output = new Vector2[] {
                 new Vector2(1, 1),
-                new Vector2(-1, 1),
-                new Vector2(-1, -1)
+                new Vector2(1, 0),
+                new Vector2(0, 0),
+                new Vector2(0, 1)
             };
+            return output;
         }
 
         public override Vector3[] GetVerts() {
-            return new Vector3[] {
+            Vector3[] output = new Vector3[] {
                 new Vector3(0.5f, -0.5f, 0f),
                 new Vector3(0.5f, 0.5f, 0f),
                 new Vector3(-0.5f, 0.5f, 0f),
                 new Vector3(-0.5f, -0.5f, 0f)
             };
+            VertCount = output.Length;
+            return output;
         }
 
-        public override EnableCap[] GetCaps() {
-            return new EnableCap[] {
-                EnableCap.Texture2D
+        public override int[] GetIndices(int offset = 0) {
+            int[] inds = new int[] {
+                0, 2, 1,
+                0, 3, 2
             };
+            IndiceCount = inds.Length;
+            if (offset != 0) {
+                for (int i = 0; i < inds.Length; i++) {
+                    inds[i] += offset;
+                }
+            }
+            return inds;
         }
 
-        public override EnableCap[] GetDisabledCaps() {
-            return new EnableCap[] {
-                EnableCap.Lighting
+        public override Vector4[] GetColors() {
+            Vector4[] output = new Vector4[] {
+                tint.Vector4,
+                tint.Vector4,
+                tint.Vector4,
+                tint.Vector4
             };
+            ColorDataCount = output.Length;
+            return output;
         }
     }
 
