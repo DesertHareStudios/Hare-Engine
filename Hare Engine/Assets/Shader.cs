@@ -1,5 +1,4 @@
-﻿using System;
-using OpenTK.Graphics.OpenGL;
+﻿using OpenTK.Graphics.OpenGL;
 using System.IO;
 
 namespace HareEngine {
@@ -24,7 +23,7 @@ namespace HareEngine {
 
                 void main() {
                     gl_Position = modelview * vec4(vPosition, 1.0);
-                    color = vec4(vColor, 1.0);
+                    color = vColor;
                 }", ShaderType.VertexShader, defaultProgramID);
             defaultFragmentShaderID = LoadFromString(
                 @"#version 330
