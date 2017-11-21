@@ -25,14 +25,6 @@ namespace HareEngine {
             tint = new Color(1f, 1f, 1f, 1f);
         }
 
-        public override void OnEnable() {
-            renderers.Add(this);
-        }
-
-        public override void OnDisable() {
-            renderers.Remove(this);
-        }
-
         public override Vector2[] GetUVs() {
             Vector2[] output = new Vector2[] {
                 new Vector2(1, 1),

@@ -21,6 +21,15 @@ namespace HareEngine {
             }
             set {
                 _active = value;
+                foreach (Behaviour b in behaviours) {
+                    if (b.Active) {
+                        if (_active) {
+                            b.OnEnable();
+                        } else {
+                            b.OnDisable();
+                        }
+                    }
+                }
             }
         }
 

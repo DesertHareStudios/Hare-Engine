@@ -5,18 +5,6 @@ using OpenTK.Graphics.OpenGL;
 namespace HareEngine {
 
     public abstract class Renderer : Behaviour {
-
-        protected static List<Renderer> renderers = new List<Renderer>();
-
-        public static List<Renderer> All {
-            get {
-                return renderers;
-            }
-        }
-
-        public Matrix4 ModelViewMatrix = Matrix4.Identity;
-        public Matrix4 ProjectionMatrix = Matrix4.Identity;
-        public Matrix4 MVPMatrix = Matrix4.Identity;
         public Texture texture;
         public int VertCount { get; protected set; }
         public int IndiceCount { get; protected set; }
@@ -30,14 +18,8 @@ namespace HareEngine {
 
         public Renderer(GameObject gameObject) : base(gameObject) { }
 
-        public override void OnEnable() {
-            base.OnEnable();
-            renderers.Add(this);
-        }
-
-        public override void OnDisable() {
-            base.OnDisable();
-            renderers.Remove(this);
+        public Matrix4 MVPMatrix(Camera cam) {
+            return ModelMatrix * cam.ViewMatrix * cam.ProjectionMatrix;
         }
 
         public abstract Vector3[] GetVerts();

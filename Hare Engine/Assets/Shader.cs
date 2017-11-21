@@ -1,70 +1,87 @@
 ﻿using OpenTK.Graphics.OpenGL;
+//using System.Collections.Generic;
 using System.IO;
 
 namespace HareEngine {
 
-    public class Shader {
+    public class Shader : Asset {
 
-        public static int defaultProgramID;
-        public static int defaultVertexShaderID;
-        public static int defaultFragmentShaderID;
-        public static int attribute_vpos;
-        public static int attribute_vcol;
-        public static int uniform_mview;
+        private ShaderType Type;
+        //private Dictionary<string, int> attribs = new Dictionary<string, int>();
+        //private Dictionary<string, int> uniforms = new Dictionary<string, int>();
 
-        public static void LoadDefaultShaders() {
-            defaultProgramID = GL.CreateProgram();
-            defaultVertexShaderID = LoadFromString(
-                @"#version 330
-                in vec3 vPosition;
-                in  vec4 vColor;
-                out vec4 color;
-                uniform mat4 modelview;
+        public int ID { get; protected set; }
 
-                void main() {
-                    gl_Position = modelview * vec4(vPosition, 1.0);
-                    color = vColor;
-                }", ShaderType.VertexShader, defaultProgramID);
-            defaultFragmentShaderID = LoadFromString(
-                @"#version 330
-
-                in vec4 color;
-                out vec4 outputColor;
-
-                void main() {
-                    outputColor = color;
-                }
-                ", ShaderType.FragmentShader, defaultProgramID);
-            GL.LinkProgram(defaultProgramID);
-            Debug.Log(GL.GetProgramInfoLog(defaultProgramID));
-            attribute_vpos = GL.GetAttribLocation(defaultProgramID, "vPosition");
-            attribute_vcol = GL.GetAttribLocation(defaultProgramID, "vColor");
-            uniform_mview = GL.GetUniformLocation(defaultProgramID, "modelview");
-
-            GL.GenBuffers(1, out Hare.vbo_position);
-            GL.GenBuffers(1, out Hare.vbo_color);
-            GL.GenBuffers(1, out Hare.vbo_mview);
-            GL.GenBuffers(1, out Hare.ibo_elements);
+        public Shader(string filepath, string name, ShaderType type) : base(filepath, name) {
+            Type = type;
+            ID = LoadFromFile(filepath, type);
         }
 
-        public static int LoadFromString(string code, ShaderType type, int program) {
+        public void Attach(int programID) {
+            GL.AttachShader(programID, ID);
+        }
+
+        public static Shader DefaultVertexShader {
+            get {
+                Shader shad = Shader.Get<Shader>("defaultVertexShader");
+                if (shad == null) {
+                    Shader defaultVertexShader = new Shader("", "defaultVertexShader", ShaderType.VertexShader);
+                    defaultVertexShader.ID = LoadFromString(
+                    @"#version 330
+                    in vec3 position;
+                    in  vec4 color;
+                    out vec4 ocolor;
+                    uniform mat4 modelview;
+
+                    void main() {
+                        gl_Position = modelview * vec4(position, 1.0);
+                        ocolor = color;
+                    }", ShaderType.VertexShader);
+                    return defaultVertexShader;
+                }
+                return shad;
+            }
+        }
+
+        public static Shader DefaultFragmentShader {
+            get {
+                Shader shad = Shader.Get<Shader>("defaultVertexShader");
+                if (shad == null) {
+                    Shader defaultVertexShader = new Shader("", "defaultVertexShader", ShaderType.VertexShader);
+                    defaultVertexShader.ID = LoadFromString(
+                    @"#version 330
+
+                    in vec4 color;
+                    out vec4 outputColor;
+
+                    void main() {
+                        outputColor = color;
+                    }", ShaderType.VertexShader);
+                    return defaultVertexShader;
+                }
+                return shad;
+            }
+        }
+
+        private static int LoadFromString(string code, ShaderType type) {
             int address = GL.CreateShader(type);
             GL.ShaderSource(address, code);
             GL.CompileShader(address);
-            GL.AttachShader(program, address);
             Debug.Log(GL.GetShaderInfoLog(address));
             return address;
         }
 
-        public static int LoadFromFile(string filename, ShaderType type, int program) {
-            int address = GL.CreateShader(type);
-            using (StreamReader sr = new StreamReader(filename)) {
-                GL.ShaderSource(address, sr.ReadToEnd());
+        private static int LoadFromFile(string filename, ShaderType type) {
+            if (filename != "") {
+                int address = GL.CreateShader(type);
+                using (StreamReader sr = new StreamReader(filename)) {
+                    GL.ShaderSource(address, sr.ReadToEnd());
+                }
+                GL.CompileShader(address);
+                Debug.Log(GL.GetShaderInfoLog(address));
+                return address;
             }
-            GL.CompileShader(address);
-            GL.AttachShader(program, address);
-            Debug.Log(GL.GetShaderInfoLog(address));
-            return address;
+            return -1;
         }
     }
 

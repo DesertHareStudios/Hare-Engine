@@ -5,14 +5,6 @@ namespace HareEngine {
 
     public class Camera : Behaviour {
 
-        private static List<Camera> cameras = new List<Camera>();
-
-        public static List<Camera> All {
-            get {
-                return cameras;
-            }
-        }
-
         public Color clearColor;
         public Viewmode viewmode;
         public float renderDistance;
@@ -22,19 +14,9 @@ namespace HareEngine {
         public Camera(GameObject gameObject) : base(gameObject) {
             renderDistance = 100f;
             nearClipping = 0.3f;
-            viewmode = Viewmode.Orthographic;
+            viewmode = Viewmode.Perspective;
             clearColor = new Color(0f, 0.618f, 1f);
             fov = 70f;
-        }
-
-        public override void OnEnable() {
-            base.OnEnable();
-            cameras.Add(this);
-        }
-
-        public override void OnDisable() {
-            base.OnDisable();
-            cameras.Remove(this);
         }
 
         public Matrix4 ProjectionMatrix {

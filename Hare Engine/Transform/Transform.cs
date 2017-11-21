@@ -95,7 +95,6 @@ namespace HareEngine {
 
         public Vector3 up {
             get {
-                //return rotation.Xyz * Vector3.UnitY;
                 return Vector3.UnitY;
             }
         }

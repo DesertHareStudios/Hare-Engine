@@ -45,7 +45,6 @@ namespace HareEngine {
 
         protected override void OnLoad(EventArgs e) {
             base.OnLoad(e);
-            Shader.LoadDefaultShaders();
             GL.Enable(EnableCap.Blend);
         }
 
@@ -95,7 +94,7 @@ namespace HareEngine {
                 }
                 currentScene.Update();
                 currentScene.LateUpdate();
-                currentScene.Render();
+                //currentScene.Render();
             }
             this.SwapBuffers();
             Input.keysd.Clear();
