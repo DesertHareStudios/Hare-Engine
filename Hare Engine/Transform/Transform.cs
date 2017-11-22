@@ -71,6 +71,7 @@ namespace HareEngine {
 
         public Vector3 forward {
             get {
+                rotation.Normalize();
                 return rotation.Xyz;
             }
         }
