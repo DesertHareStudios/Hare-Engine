@@ -4,18 +4,6 @@ namespace HareEngine {
 
     public class SpriteRenderer : Renderer {
 
-        public string TextureName {
-            get {
-                return texture.Name;
-            }
-            set {
-                Texture tex = (Texture)Asset.Get(value);
-                if (tex != null) {
-                    texture = tex;
-                }
-            }
-        }
-
         public override Matrix4 ModelMatrix {
             get {
                 return Matrix4.CreateScale(transform.AbsoluteScale) * Matrix4.CreateFromQuaternion(transform.rotation) * Matrix4.CreateTranslation(transform.position);

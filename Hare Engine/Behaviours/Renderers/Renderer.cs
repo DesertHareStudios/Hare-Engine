@@ -6,7 +6,7 @@ namespace HareEngine {
         public int VertCount { get; protected set; }
         public int IndiceCount { get; protected set; }
         public Matrix4 MVPMatrix;
-        public Texture texture;
+        public Texture texture = new Texture("", "");
 
         public abstract Matrix4 ModelMatrix { get; }
 
