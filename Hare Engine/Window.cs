@@ -26,8 +26,8 @@ namespace HareEngine {
         private int ibo_elements;
 
         Vector3[] vertdata;
-        Vector4[] coldata;
         int[] indicedata;
+        Vector2[] texdata;
 
         private ShaderProgram SProgram;
         private List<Key> keysd = new List<Key>();
@@ -54,15 +54,14 @@ namespace HareEngine {
 
         protected override void OnLoad(EventArgs e) {
             base.OnLoad(e);
-            GL.Viewport(X, Y + Height, Width, Height);
+            GL.Viewport(0, 0, Width, Height);
             GL.GenBuffers(1, out ibo_elements);
             SProgram = new ShaderProgram(Shader.DefaultVertexShader, Shader.DefaultFragmentShader);
-            GL.Enable(EnableCap.Blend);
         }
 
         protected override void OnResize(EventArgs e) {
             base.OnResize(e);
-            GL.Viewport(X, Y + Height, Width, Height);
+            GL.Viewport(0, 0, Width, Height);
         }
 
         protected override void OnUpdateFrame(FrameEventArgs e) {
@@ -74,29 +73,30 @@ namespace HareEngine {
 
             List<Vector3> verts = new List<Vector3>();
             List<int> inds = new List<int>();
-            List<Vector4> colors = new List<Vector4>();
+            List<Vector2> uvs = new List<Vector2>();
 
             int vertcount = 0;
             currentScene.ForEachBehaviour<Renderer>((r) => {
                 verts.AddRange(r.GetVerts().ToList());
                 inds.AddRange(r.GetIndices(vertcount).ToList());
-                colors.AddRange(r.GetColors().ToList());
+                uvs.AddRange(r.GetUVs().ToList());
                 vertcount += r.VertCount;
             });
 
             vertdata = verts.ToArray();
             indicedata = inds.ToArray();
-            coldata = colors.ToArray();
+            texdata = uvs.ToArray();
+            indicedata = inds.ToArray();
 
             GL.BindBuffer(BufferTarget.ArrayBuffer, SProgram.GetBuffer("position"));
 
             GL.BufferData<Vector3>(BufferTarget.ArrayBuffer, (IntPtr)(vertdata.Length * Vector3.SizeInBytes), vertdata, BufferUsageHint.StaticDraw);
             GL.VertexAttribPointer(SProgram.GetAttribute("position"), 3, VertexAttribPointerType.Float, false, 0, 0);
 
-            if (SProgram.GetAttribute("tint") != -1) {
-                GL.BindBuffer(BufferTarget.ArrayBuffer, SProgram.GetBuffer("tint"));
-                GL.BufferData<Vector4>(BufferTarget.ArrayBuffer, (IntPtr)(coldata.Length * Vector4.SizeInBytes), coldata, BufferUsageHint.StaticDraw);
-                GL.VertexAttribPointer(SProgram.GetAttribute("tint"), 3, VertexAttribPointerType.Float, true, 0, 0);
+            if (SProgram.GetAttribute("texcoord") != -1) {
+                GL.BindBuffer(BufferTarget.ArrayBuffer, SProgram.GetBuffer("texcoord"));
+                GL.BufferData<Vector2>(BufferTarget.ArrayBuffer, (IntPtr)(texdata.Length * Vector2.SizeInBytes), texdata, BufferUsageHint.StaticDraw);
+                GL.VertexAttribPointer(SProgram.GetAttribute("texcoord"), 2, VertexAttribPointerType.Float, true, 0, 0);
             }
 
             GL.UseProgram(SProgram.ID);
@@ -139,7 +139,6 @@ namespace HareEngine {
                 }
                 currentScene.Update();
                 currentScene.LateUpdate();
-                GL.Viewport(X, Y + Height, Width, Height);
 
                 GL.Enable(EnableCap.DepthTest);
 
@@ -150,7 +149,12 @@ namespace HareEngine {
                     int indiceat = 0;
                     currentScene.ForEachBehaviour<Renderer>((r) => {
                         r.SetMVPMatrix(cam);
+                        GL.BindTexture(TextureTarget.Texture2D, r.texture.ID);
                         GL.UniformMatrix4(SProgram.GetUniform("modelview"), false, ref r.MVPMatrix);
+
+                        if (SProgram.GetAttribute("maintexture") != -1) {
+                            GL.Uniform1(SProgram.GetAttribute("maintexture"), r.texture.ID);
+                        }
                         GL.DrawElements(BeginMode.Triangles, r.IndiceCount, DrawElementsType.UnsignedInt, indiceat * sizeof(uint));
                         indiceat += r.IndiceCount;
                     });

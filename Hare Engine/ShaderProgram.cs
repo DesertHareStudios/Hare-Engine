@@ -34,9 +34,13 @@ namespace HareEngine {
             switch (shader.Type) {
                 case ShaderType.VertexShader:
                     VertexShader = shader;
+                    GL.AttachShader(ID, shader.ID);
+                    Debug.Log(GL.GetShaderInfoLog(shader.ID));
                     return true;
                 case ShaderType.FragmentShader:
                     FragmentShader = shader;
+                    GL.AttachShader(ID, shader.ID);
+                    Debug.Log(GL.GetShaderInfoLog(shader.ID));
                     return true;
             }
             return false;
@@ -46,8 +50,9 @@ namespace HareEngine {
 
             Console.WriteLine(GL.GetProgramInfoLog(ID));
             int ac, uc;
-            GL.GetProgram(ID, ProgramParameter.ActiveAttributes, out ac);
-            GL.GetProgram(ID, ProgramParameter.ActiveUniforms, out uc);
+            GL.GetProgram(ID, GetProgramParameterName.ActiveAttributes, out ac);
+            GL.GetProgram(ID, GetProgramParameterName.ActiveUniforms, out uc);
+
             AttributeCount = ac;
             UniformCount = uc;
 

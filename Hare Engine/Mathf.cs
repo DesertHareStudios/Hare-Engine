@@ -73,9 +73,9 @@ namespace HareEngine {
 
         public static Vector3 GetEulerAngles(Quaternion q) {
             return new Vector3(
-                    ToDegrees(Atan2(q.X * q.Z + q.Y * q.W, q.X * q.W - q.Y * q.Z)),
+                    ToDegrees(Atan2(q.X * q.Z - q.Y * q.W, q.Y * q.Z + q.X * q.W)),
                     ToDegrees(Acos(-(q.X * q.X) - (q.Y * q.Y) + (q.Z * q.Z) + (q.W * q.W))),
-                    ToDegrees(Atan2(q.X * q.Z - q.Y * q.W, q.Y * q.Z + q.X * q.W))
+                    ToDegrees(Atan2(q.X * q.Z + q.Y * q.W, q.X * q.W - q.Y * q.Z))
                 );
         }
 

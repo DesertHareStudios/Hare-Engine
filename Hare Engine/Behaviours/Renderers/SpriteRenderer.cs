@@ -1,12 +1,8 @@
-﻿using System;
-using OpenTK;
-using OpenTK.Graphics.OpenGL;
+﻿using OpenTK;
 
 namespace HareEngine {
 
     public class SpriteRenderer : Renderer {
-
-        public Color tint;
 
         public string TextureName {
             get {
@@ -28,7 +24,6 @@ namespace HareEngine {
 
         public SpriteRenderer(GameObject gameObject) : base(gameObject) {
             texture = new Texture("", "");
-            tint = new Color(1f, 1f, 1f, 1f);
         }
 
         public override Vector2[] GetUVs() {
@@ -64,17 +59,6 @@ namespace HareEngine {
                 }
             }
             return inds;
-        }
-
-        public override Vector4[] GetColors() {
-            Vector4[] output = new Vector4[] {
-                tint.Vector4,
-                tint.Vector4,
-                tint.Vector4,
-                tint.Vector4
-            };
-            ColorDataCount = output.Length;
-            return output;
         }
     }
 

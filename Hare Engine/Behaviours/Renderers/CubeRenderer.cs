@@ -1,37 +1,16 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using OpenTK;
 
 namespace HareEngine {
 
     public class CubeRenderer : Renderer {
 
-        public Color color;
-
-        public CubeRenderer(GameObject gameObject) : base(gameObject) {
-            color = new Color(1f, 1f, 1f, 1f);
-        }
+        public CubeRenderer(GameObject gameObject) : base(gameObject) { }
 
         public override Matrix4 ModelMatrix {
             get {
                 return Matrix4.CreateScale(transform.AbsoluteScale) * Matrix4.CreateFromQuaternion(transform.rotation) * Matrix4.CreateTranslation(transform.position);
             }
-        }
-
-        public override Vector4[] GetColors() {
-            return new Vector4[] {
-                color.Vector4,
-                color.Vector4,
-                color.Vector4,
-                color.Vector4,
-                color.Vector4,
-                color.Vector4,
-                color.Vector4,
-                color.Vector4
-            };
         }
 
         public override int[] GetIndices(int offset = 0) {
@@ -67,7 +46,17 @@ namespace HareEngine {
         }
 
         public override Vector2[] GetUVs() {
-            throw new NotImplementedException();
+            Vector2[] output = new Vector2[] {
+                new Vector2(1, 1),
+                new Vector2(1, 0),
+                new Vector2(0, 0),
+                new Vector2(0, 1),
+                new Vector2(1, 1),
+                new Vector2(1, 0),
+                new Vector2(0, 0),
+                new Vector2(0, 1)
+            };
+            return output;
         }
 
         public override Vector3[] GetVerts() {

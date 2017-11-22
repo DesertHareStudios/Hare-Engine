@@ -26,13 +26,13 @@ namespace HareEngine {
                     defaultVertexShader.ID = LoadFromString(
                     @"#version 330
                     in vec3 position;
-                    in  vec4 tint;
-                    out vec4 color;
+                    in vec2 texcoord;
+                    out vec2 f_texcoord;
                     uniform mat4 modelview;
 
                     void main() {
                         gl_Position = modelview * vec4(position, 1.0);
-                        color = tint;
+                        f_texcoord = texcoord;
                     }", ShaderType.VertexShader);
                     return defaultVertexShader;
                 }
@@ -42,19 +42,20 @@ namespace HareEngine {
 
         public static Shader DefaultFragmentShader {
             get {
-                Shader shad = Shader.Get<Shader>("defaultVertexShader");
+                Shader shad = Shader.Get<Shader>("defaultFragmentShader");
                 if (shad == null) {
-                    Shader defaultVertexShader = new Shader("", "defaultVertexShader", ShaderType.VertexShader);
-                    defaultVertexShader.ID = LoadFromString(
+                    Shader defaultFragmentShader = new Shader("", "defaultFragmentShader", ShaderType.FragmentShader);
+                    defaultFragmentShader.ID = LoadFromString(
                     @"#version 330
 
-                    in vec4 tint;
-                    out vec4 color;
+                    in vec2 f_texcoord;
+
+                    uniform sampler2D maintexture;
 
                     void main() {
-                        color = tint;
-                    }", ShaderType.VertexShader);
-                    return defaultVertexShader;
+                        gl_FragColor = texture(maintexture, f_texcoord);
+                    }", ShaderType.FragmentShader);
+                    return defaultFragmentShader;
                 }
                 return shad;
             }
