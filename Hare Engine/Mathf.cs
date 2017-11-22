@@ -71,6 +71,14 @@ namespace HareEngine {
                 2f * rotation.W * Vector3.Cross(rotation.Xyz, vector);
         }
 
+        public static Vector3 GetEulerAngles(Quaternion q) {
+            return new Vector3(
+                    ToDegrees(Atan2(q.X * q.Z + q.Y * q.W, q.X * q.W - q.Y * q.Z)),
+                    ToDegrees(Acos(-(q.X * q.X) - (q.Y * q.Y) + (q.Z * q.Z) + (q.W * q.W))),
+                    ToDegrees(Atan2(q.X * q.Z - q.Y * q.W, q.Y * q.Z + q.X * q.W))
+                );
+        }
+
         public static float Sin(float a) {
             return (float)Math.Sin((double)a);
         }

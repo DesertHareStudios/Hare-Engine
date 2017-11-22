@@ -109,7 +109,7 @@ namespace HareEngine {
             this.gameObject = gameObject;
             parent = null;
             _childs = new List<Transform>();
-            position = new Vector3();
+            position = new Vector3(0f, 0f, 0f);
             rotation = Quaternion.Identity;
             scale = new Vector3(1f, 1f, 1f);
         }

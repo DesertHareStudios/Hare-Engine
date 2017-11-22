@@ -4,6 +4,7 @@ using OpenTK.Graphics.OpenGL;
 using OpenTK.Graphics;
 using OpenTK;
 using OpenTK.Input;
+using System.Linq;
 
 namespace HareEngine {
 
@@ -21,6 +22,14 @@ namespace HareEngine {
                 //TODO do more changes
             }
         }
+
+        private int ibo_elements;
+
+        Vector3[] vertdata;
+        Vector4[] coldata;
+        int[] indicedata;
+
+        private ShaderProgram SProgram;
         private List<Key> keysd = new List<Key>();
         private List<Key> keysu = new List<Key>();
         private List<MouseButton> mbd = new List<MouseButton>();
@@ -45,13 +54,15 @@ namespace HareEngine {
 
         protected override void OnLoad(EventArgs e) {
             base.OnLoad(e);
+            GL.Viewport(X, Y + Height, Width, Height);
+            GL.GenBuffers(1, out ibo_elements);
+            SProgram = new ShaderProgram(Shader.DefaultVertexShader, Shader.DefaultFragmentShader);
             GL.Enable(EnableCap.Blend);
         }
 
         protected override void OnResize(EventArgs e) {
             base.OnResize(e);
-            GL.Viewport(X, Y, Width, Height);
-            GL.Ortho(Width / 2, Width / 2, -Height / 2, Height / 2, -1, 1);
+            GL.Viewport(X, Y + Height, Width, Height);
         }
 
         protected override void OnUpdateFrame(FrameEventArgs e) {
@@ -60,6 +71,40 @@ namespace HareEngine {
             if (currentScene != null) {
                 currentScene.FixedUpdate();
             }
+
+            List<Vector3> verts = new List<Vector3>();
+            List<int> inds = new List<int>();
+            List<Vector4> colors = new List<Vector4>();
+
+            int vertcount = 0;
+            currentScene.ForEachBehaviour<Renderer>((r) => {
+                verts.AddRange(r.GetVerts().ToList());
+                inds.AddRange(r.GetIndices(vertcount).ToList());
+                colors.AddRange(r.GetColors().ToList());
+                vertcount += r.VertCount;
+            });
+
+            vertdata = verts.ToArray();
+            indicedata = inds.ToArray();
+            coldata = colors.ToArray();
+
+            GL.BindBuffer(BufferTarget.ArrayBuffer, SProgram.GetBuffer("position"));
+
+            GL.BufferData<Vector3>(BufferTarget.ArrayBuffer, (IntPtr)(vertdata.Length * Vector3.SizeInBytes), vertdata, BufferUsageHint.StaticDraw);
+            GL.VertexAttribPointer(SProgram.GetAttribute("position"), 3, VertexAttribPointerType.Float, false, 0, 0);
+
+            if (SProgram.GetAttribute("tint") != -1) {
+                GL.BindBuffer(BufferTarget.ArrayBuffer, SProgram.GetBuffer("tint"));
+                GL.BufferData<Vector4>(BufferTarget.ArrayBuffer, (IntPtr)(coldata.Length * Vector4.SizeInBytes), coldata, BufferUsageHint.StaticDraw);
+                GL.VertexAttribPointer(SProgram.GetAttribute("tint"), 3, VertexAttribPointerType.Float, true, 0, 0);
+            }
+
+            GL.UseProgram(SProgram.ID);
+            GL.BindBuffer(BufferTarget.ArrayBuffer, 0);
+
+            GL.BindBuffer(BufferTarget.ElementArrayBuffer, ibo_elements);
+            GL.BufferData(BufferTarget.ElementArrayBuffer, (IntPtr)(indicedata.Length * sizeof(int)), indicedata, BufferUsageHint.StaticDraw);
+
         }
 
         protected override void OnRenderFrame(FrameEventArgs e) {
@@ -94,7 +139,26 @@ namespace HareEngine {
                 }
                 currentScene.Update();
                 currentScene.LateUpdate();
-                //currentScene.Render();
+                GL.Viewport(X, Y + Height, Width, Height);
+
+                GL.Enable(EnableCap.DepthTest);
+
+                SProgram.EnableVertexAttribArrays();
+
+                currentScene.ForEachBehaviour<Camera>((cam) => {
+                    Hare.clearColor = cam.clearColor;
+                    int indiceat = 0;
+                    currentScene.ForEachBehaviour<Renderer>((r) => {
+                        r.SetMVPMatrix(cam);
+                        GL.UniformMatrix4(SProgram.GetUniform("modelview"), false, ref r.MVPMatrix);
+                        GL.DrawElements(BeginMode.Triangles, r.IndiceCount, DrawElementsType.UnsignedInt, indiceat * sizeof(uint));
+                        indiceat += r.IndiceCount;
+                    });
+                });
+
+                SProgram.DisableVertexAttribArrays();
+
+                GL.Flush();
             }
             this.SwapBuffers();
             Input.keysd.Clear();

@@ -54,6 +54,7 @@
     <Compile Include="Behaviours\Audio\AudioSource.cs" />
     <Compile Include="Behaviours\Audio\AudioListener.cs" />
     <Compile Include="Behaviours\Camera.cs" />
+    <Compile Include="Behaviours\Renderers\CubeRenderer.cs" />
     <Compile Include="Behaviours\Renderers\Renderer.cs" />
     <Compile Include="Behaviours\Renderers\SpriteRenderer.cs" />
     <Compile Include="Color\Color.cs" />
@@ -73,6 +74,7 @@
     <Compile Include="Geometry\Rect.cs" />
     <Compile Include="Scene.cs" />
     <Compile Include="SceneManagement\SceneManager.cs" />
+    <Compile Include="ShaderProgram.cs" />
     <Compile Include="Time.cs" />
     <Compile Include="Transform\Transform.cs" />
     <Compile Include="Window.cs" />

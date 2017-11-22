@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using OpenTK;
+﻿using OpenTK;
 
 namespace HareEngine {
 
@@ -9,23 +8,23 @@ namespace HareEngine {
         public Viewmode viewmode;
         public float renderDistance;
         public float nearClipping;
-        public float fov;
+        public Range fov;
 
         public Camera(GameObject gameObject) : base(gameObject) {
             renderDistance = 100f;
             nearClipping = 0.3f;
-            viewmode = Viewmode.Perspective;
+            viewmode = Viewmode.Orthographic;
             clearColor = new Color(0f, 0.618f, 1f);
-            fov = 70f;
+            fov = new Range(1f, 179f, 70f);
         }
 
         public Matrix4 ProjectionMatrix {
             get {
                 switch (viewmode) {
                     case Viewmode.Orthographic:
-                        return Matrix4.CreateOrthographic(Hare.window.Width, Hare.window.Height, nearClipping, renderDistance);
+                        return Matrix4.CreateOrthographic((float)Hare.window.Width, (float)Hare.window.Height, nearClipping, renderDistance);
                     case Viewmode.Perspective:
-                        return Matrix4.CreatePerspectiveFieldOfView(Mathf.ToRadians(fov), Hare.window.AspectRatio, nearClipping, renderDistance);
+                        return Matrix4.CreatePerspectiveFieldOfView(Mathf.ToRadians(fov.Value), Hare.window.AspectRatio, nearClipping, renderDistance);
                     default:
                         viewmode = Viewmode.Orthographic;
                         return ProjectionMatrix;

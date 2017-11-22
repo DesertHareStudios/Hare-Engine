@@ -10,34 +10,16 @@ namespace HareEngine {
         public List<GameObject> gameObjects = new List<GameObject>();
         public Action Preload;
 
-        public delegate void OnCamera(Camera camera);
-        public delegate void OnRenderer(Renderer renderer);
+        public delegate void OnTypeMatch<T>(T behaviour) where T : Behaviour;
 
-        public int ForEachCamera(OnCamera oc) {
+        public int ForEachBehaviour<T>(OnTypeMatch<T> or) where T : Behaviour {
             int i = 0;
             foreach (GameObject go in gameObjects) {
                 if (go.Active) {
                     foreach (Behaviour b in go.behaviours) {
                         if (b.Active) {
-                            if (b.GetType().IsSubclassOf(typeof(Camera)) || b.GetType() == typeof(Camera)) {
-                                oc?.Invoke((Camera)b);
-                                i++;
-                            }
-                        }
-                    }
-                }
-            }
-            return i;
-        }
-
-        public int ForEachRenderer(OnRenderer or) {
-            int i = 0;
-            foreach (GameObject go in gameObjects) {
-                if (go.Active) {
-                    foreach (Behaviour b in go.behaviours) {
-                        if (b.Active) {
-                            if (b.GetType().IsSubclassOf(typeof(Renderer))) {
-                                or?.Invoke((Renderer)b);
+                            if (b.GetType().IsSubclassOf(typeof(T)) || b.GetType() == typeof(T)) {
+                                or?.Invoke((T)b);
                                 i++;
                             }
                         }
@@ -69,8 +51,7 @@ namespace HareEngine {
                         try {
                             b.Awake();
                         } catch (Exception e) {
-                            Debug.Error(e.Message);
-                            Debug.Error(e.StackTrace);
+                            Debug.Exception(e);
                         }
                     }));
                     t.IsBackground = true;
@@ -97,8 +78,7 @@ namespace HareEngine {
                                 try {
                                     b.Start();
                                 } catch (Exception e) {
-                                    Debug.Error(e.Message);
-                                    Debug.Error(e.StackTrace);
+                                    Debug.Exception(e);
                                 }
                             }));
                             t.IsBackground = true;
@@ -127,8 +107,7 @@ namespace HareEngine {
                                 try {
                                     b.Update();
                                 } catch (Exception e) {
-                                    Debug.Error(e.Message);
-                                    Debug.Error(e.StackTrace);
+                                    Debug.Exception(e);
                                 }
                             }));
                             t.IsBackground = true;
@@ -157,8 +136,7 @@ namespace HareEngine {
                                 try {
                                     b.FixedUpdate();
                                 } catch (Exception e) {
-                                    Debug.Error(e.Message);
-                                    Debug.Error(e.StackTrace);
+                                    Debug.Exception(e);
                                 }
                             }));
                             t.IsBackground = true;
@@ -187,8 +165,7 @@ namespace HareEngine {
                                 try {
                                     b.LateUpdate();
                                 } catch (Exception e) {
-                                    Debug.Error(e.Message);
-                                    Debug.Error(e.StackTrace);
+                                    Debug.Exception(e);
                                 }
                             }));
                             t.IsBackground = true;

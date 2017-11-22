@@ -1,14 +1,11 @@
 ﻿using OpenTK.Graphics.OpenGL;
-//using System.Collections.Generic;
 using System.IO;
 
 namespace HareEngine {
 
     public class Shader : Asset {
 
-        private ShaderType Type;
-        //private Dictionary<string, int> attribs = new Dictionary<string, int>();
-        //private Dictionary<string, int> uniforms = new Dictionary<string, int>();
+        public ShaderType Type { get; protected set; }
 
         public int ID { get; protected set; }
 
@@ -29,13 +26,13 @@ namespace HareEngine {
                     defaultVertexShader.ID = LoadFromString(
                     @"#version 330
                     in vec3 position;
-                    in  vec4 color;
-                    out vec4 ocolor;
+                    in  vec4 tint;
+                    out vec4 color;
                     uniform mat4 modelview;
 
                     void main() {
                         gl_Position = modelview * vec4(position, 1.0);
-                        ocolor = color;
+                        color = tint;
                     }", ShaderType.VertexShader);
                     return defaultVertexShader;
                 }
@@ -51,11 +48,11 @@ namespace HareEngine {
                     defaultVertexShader.ID = LoadFromString(
                     @"#version 330
 
-                    in vec4 color;
-                    out vec4 outputColor;
+                    in vec4 tint;
+                    out vec4 color;
 
                     void main() {
-                        outputColor = color;
+                        color = tint;
                     }", ShaderType.VertexShader);
                     return defaultVertexShader;
                 }
