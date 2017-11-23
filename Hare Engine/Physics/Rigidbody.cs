@@ -5,7 +5,7 @@ namespace HareEngine {
 
     public class Rigidbody : Behaviour {
 
-        private static List<Rigidbody> bodies;
+        private static List<Rigidbody> bodies = new List<Rigidbody>();
 
         private Geometry.Line path;
         private Vector3 previousPosition;
@@ -66,15 +66,11 @@ namespace HareEngine {
         }
 
         public void Translate(float x, float y, float z) {
-            previousPosition = transform.position;
-            transform.position += new Vector3(x, y, z);
-            path = new Geometry.Line(previousPosition, transform.position);
+            Translate(new Vector3(x, y, z));
         }
 
         public void Translate(float x, float y) {
-            previousPosition = transform.position;
-            transform.position += new Vector3(x, y, 0f);
-            path = new Geometry.Line(previousPosition, transform.position);
+            Translate(x, y, 0f);
         }
 
         public override void OnEnable() {

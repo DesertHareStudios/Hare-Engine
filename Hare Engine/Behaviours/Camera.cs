@@ -18,7 +18,7 @@ namespace HareEngine {
             viewmode = Viewmode.Orthographic;
             clearColor = new Color(0f, 0.618f, 1f);
             fov = new Range(1f, 179f, 70f);
-            OrthoWidth = 3f;
+            OrthoWidth = 16f;
             Render = true;
         }
 
