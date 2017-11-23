@@ -10,6 +10,7 @@ namespace HareEngine {
         public float nearClipping;
         public Range fov;
         public float OrthoWidth;
+        public bool Render;
 
         public Camera(GameObject gameObject) : base(gameObject) {
             renderDistance = 100f;
@@ -18,6 +19,7 @@ namespace HareEngine {
             clearColor = new Color(0f, 0.618f, 1f);
             fov = new Range(1f, 179f, 70f);
             OrthoWidth = 3f;
+            Render = true;
         }
 
         public Matrix4 ProjectionMatrix {

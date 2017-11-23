@@ -1,73 +1,70 @@
 ﻿using OpenTK;
 using OpenTK.Input;
-using System.Collections.Generic;
 
 namespace HareEngine {
 
     public class Input {
 
-        public static Vector2 mousePosition = new Vector2();
-        public static bool isMouseInside = true;
-        public static float scrollDelta = 0;
-        public static List<MouseButton> mb = new List<MouseButton>();
-        public static List<MouseButton> mbd = new List<MouseButton>();
-        public static List<MouseButton> mbu = new List<MouseButton>();
+        private static KeyboardState ks;
+        private static KeyboardState prevks;
+        private static JoystickState js;
+        private static JoystickState prevjs;
+        private static MouseState ms;
+        private static MouseState prevms;
 
-        public static List<Key> keys = new List<Key>();
-        public static List<Key> keysd = new List<Key>();
-        public static List<Key> keysu = new List<Key>();
-
-        public static bool GetKey(Key key) {
-            foreach (Key k in keys) {
-                if (key.Equals(k)) {
-                    return true;
-                }
-            }
-            return false;
+        public static void UpdateData() {
+            prevks = ks;
+            ks = Keyboard.GetState();
+            prevjs = js;
+            js = Joystick.GetState(0);
+            prevms = ms;
+            ms = Mouse.GetState();
         }
 
-        public static bool GetKeyDown(Key key) {
-            foreach (Key k in keysd) {
-                if (key.Equals(k)) {
-                    return true;
-                }
-            }
-            return false;
+        public static bool GetButton(Key button) {
+            return ks.IsKeyDown(button);
+        }
+        public static bool GetButtonDown(Key button) {
+            return ks.IsKeyDown(button) && prevks.IsKeyUp(button);
         }
 
-        public static bool GetKeyUp(Key key) {
-            foreach (Key k in keysu) {
-                if (key.Equals(k)) {
-                    return true;
-                }
-            }
-            return false;
-        }
-        public static bool GetMouseButton(MouseButton b) {
-            foreach (MouseButton k in mb) {
-                if (b.Equals(k)) {
-                    return true;
-                }
-            }
-            return false;
+        public static bool GetButtonUp(Key button) {
+            return ks.IsKeyUp(button) && prevks.IsKeyDown(button);
         }
 
-        public static bool GetMouseButtonDown(MouseButton b) {
-            foreach (MouseButton k in mbd) {
-                if (b.Equals(k)) {
-                    return true;
-                }
-            }
-            return false;
+        public static bool GetButton(JoystickButton button) {
+            return js.IsButtonDown(button);
+        }
+        public static bool GetButtonDown(JoystickButton button) {
+            return js.IsButtonDown(button) && prevjs.IsButtonUp(button);
         }
 
-        public static bool GetMouseButtonUp(MouseButton b) {
-            foreach (MouseButton k in mbu) {
-                if (b.Equals(k)) {
-                    return true;
-                }
+        public static bool GetButtonUp(JoystickButton button) {
+            return js.IsButtonUp(button) && prevjs.IsButtonDown(button);
+        }
+
+        public static bool GetButton(MouseButton button) {
+            return ms.IsButtonDown(button);
+        }
+        public static bool GetButtonDown(MouseButton button) {
+            return ms.IsButtonDown(button) && prevms.IsButtonUp(button);
+        }
+
+        public static bool GetButtonUp(MouseButton button) {
+            return ms.IsButtonUp(button) && prevms.IsButtonDown(button);
+        }
+
+        public static float MouseScroll {
+            get {
+                return ms.WheelPrecise - prevms.WheelPrecise;
             }
-            return false;
+        }
+
+        public static Vector2 MousePosition {
+            get {
+                MouseState mcs = Mouse.GetCursorState();
+                return new Vector2(mcs.X, mcs.Y);
+            }
         }
 
     }

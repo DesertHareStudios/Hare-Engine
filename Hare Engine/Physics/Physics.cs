@@ -16,11 +16,13 @@
         public GravityType gravityType;
         public float GravityScale;
         public float G;
+        public float CollisionPrecision;
 
         private Physics() {
             GravityScale = 9.8f;
             gravityType = GravityType.Classic;
             G = 0.06673f;
+            CollisionPrecision = 32f;
         }
 
     }

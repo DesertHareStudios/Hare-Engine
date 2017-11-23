@@ -15,6 +15,7 @@ namespace HareEngine {
         public bool isKinematic = false;
         public Vector3 speed = new Vector3();
         public Vector3 centerOfMass = new Vector3();
+
         public Geometry.Line Path {
             get {
                 return path;
