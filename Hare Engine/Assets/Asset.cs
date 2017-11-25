@@ -22,6 +22,16 @@ namespace HareEngine {
             }
         }
 
+
+        public delegate void AssetListener<T>(T a) where T : Asset;
+        public static void ForEachAsset<T>(AssetListener<T> a) where T : Asset {
+            foreach (Asset asset in assets) {
+                if (asset.GetType() == typeof(T)) {
+                    a?.Invoke((T)asset);
+                }
+            }
+        }
+
         public static void Clear() {
             assets.Clear();
         }
