@@ -13,6 +13,7 @@
         public static void Init(int width, int height, string title) {
             window = new Window(width, height, title);
             OpenTK.Toolkit.Init();
+            Asset.AutoRead();
         }
 
         public static void Run() {

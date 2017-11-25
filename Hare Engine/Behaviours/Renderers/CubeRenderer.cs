@@ -4,12 +4,6 @@ namespace HareEngine {
 
     public class CubeRenderer : Renderer {
 
-        public override Matrix4 ModelMatrix {
-            get {
-                return Matrix4.CreateScale(transform.AbsoluteScale) * Matrix4.CreateFromQuaternion(transform.rotation) * Matrix4.CreateTranslation(transform.position);
-            }
-        }
-
         public CubeRenderer(GameObject gameObject) : base(gameObject) { }
 
         public override int[] GetIndices(int offset = 0) {

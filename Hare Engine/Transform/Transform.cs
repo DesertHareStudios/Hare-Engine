@@ -35,40 +35,6 @@ namespace HareEngine {
             }
         }
 
-        public Vector3 RelativePosition {
-            get {
-                if (parent == null) {
-                    return position;
-                } else {
-                    return position - parent.RelativePosition;
-                }
-            }
-            set {
-                if (parent == null) {
-                    position = value;
-                } else {
-                    position = parent.RelativePosition + value;
-                }
-            }
-        }
-
-        public Vector3 AbsoluteScale {
-            get {
-                if (parent == null) {
-                    return scale;
-                } else {
-                    return parent.AbsoluteScale + scale;
-                }
-            }
-            set {
-                if (parent == null) {
-                    scale = value;
-                } else {
-                    scale = value - parent.AbsoluteScale;
-                }
-            }
-        }
-
         public Vector3 forward {
             get {
                 rotation.Normalize();
@@ -125,6 +91,20 @@ namespace HareEngine {
 
         public void Translate(float x, float y) {
             position += new Vector3(x, y, 0f);
+        }
+
+        public Matrix4 ModelMatrix {
+            get {
+                Matrix4 output = Matrix4.CreateScale(scale) * Matrix4.CreateFromQuaternion(rotation) * Matrix4.CreateTranslation(position);
+                if (parent != null) {
+                    output *= parent.ModelMatrix;
+                }
+                return output;
+            }
+        }
+
+        public Matrix4 SetMVPMatrix(Camera cam) {
+            return ModelMatrix * cam.ViewMatrix * cam.ProjectionMatrix;
         }
 
     }

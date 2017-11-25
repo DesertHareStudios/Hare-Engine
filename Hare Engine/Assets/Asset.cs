@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.IO;
 
 namespace HareEngine {
 
@@ -52,6 +53,55 @@ namespace HareEngine {
                 }
             }
             return null;
+        }
+
+        public static void AutoRead(string path) {
+            assets.Clear();
+            RecursiveRead(path);
+        }
+
+        public static void AutoRead() {
+            AutoRead(Directory.GetCurrentDirectory() + "\\Assets\\");
+        }
+
+        private static void RecursiveRead(string path) {
+            if (Directory.Exists(path)) {
+                string[] subdirs = Directory.GetDirectories(path);
+                string[] files = Directory.GetFiles(path);
+
+                foreach (string rs in subdirs) {
+                    string[] ss = rs.Split('\\');
+                    string s = ss[ss.Length - 1];
+                    RecursiveRead(path + s);
+                }
+                foreach (string file in files) {
+                    string[] ss = file.Split('\\');
+                    string s = ss[ss.Length - 1];
+                    string[] sParts = s.Split('.');
+                    string extension = (sParts[sParts.Length - 1]).ToLower();
+                    string name = "";
+                    for (int i = 0; i < sParts.Length - 1; i++) {
+                        name += sParts[i];
+                        if (i < sParts.Length - 2) {
+                            name += ".";
+                        }
+                    }
+                    switch (extension) {
+                        case "png":
+                        case "bmp":
+                            Texture tex = new Texture(file, name);
+                            break;
+                        case "mp3":
+                        case "ogg":
+                        case "wav":
+                            AudioClip audio = new AudioClip(file, name);
+                            break;
+                        case "glsl":
+                            //TODO load shaders
+                            break;
+                    }
+                }
+            }
         }
 
     }

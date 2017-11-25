@@ -4,12 +4,6 @@ namespace HareEngine {
 
     public class SpriteRenderer : Renderer {
 
-        public override Matrix4 ModelMatrix {
-            get {
-                return Matrix4.CreateScale(transform.AbsoluteScale) * Matrix4.CreateFromQuaternion(transform.rotation) * Matrix4.CreateTranslation(transform.position);
-            }
-        }
-
         public SpriteRenderer(GameObject gameObject) : base(gameObject) {
             texture = new Texture("", "");
         }
