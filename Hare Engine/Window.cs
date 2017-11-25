@@ -118,7 +118,6 @@ namespace HareEngine {
             if (currentScene != null) {
                 if (init) {
                     init = false;
-                    currentScene.Preload?.Invoke();
                     currentScene.Awake();
                     currentScene.Start();
                 }

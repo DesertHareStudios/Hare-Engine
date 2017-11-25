@@ -26,6 +26,8 @@
             }
         }
 
+        public Behaviour() { }
+
         public Behaviour(GameObject gameObject) {
             this.gameObject = gameObject;
             Active = true;

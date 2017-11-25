@@ -8,7 +8,6 @@ namespace HareEngine {
     public class Scene {
         public string Name = "";
         public List<GameObject> gameObjects = new List<GameObject>();
-        public Action Preload;
 
         public delegate void OnTypeMatch<T>(T behaviour) where T : Behaviour;
 

@@ -38,10 +38,6 @@ namespace HareEngine {
 
         public Matrix4 ViewMatrix {
             get {
-                //return Matrix4.LookAt(
-                //    transform.position,
-                //    (transform.position + transform.forward),
-                //    transform.up);
                 Matrix4 mView = Matrix4.Identity;
 
                 float twoXSquared = 2 * transform.rotation.X * transform.rotation.X;

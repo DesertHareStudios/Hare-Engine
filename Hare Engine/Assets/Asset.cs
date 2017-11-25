@@ -48,7 +48,7 @@ namespace HareEngine {
 
         public static T Get<T>(string name) where T : Asset {
             foreach (Asset a in assets) {
-                if (a.Name == name && a.GetType() == typeof(T)) {
+                if (a.Name == name && (a.GetType() == typeof(T) || a.GetType().IsSubclassOf(typeof(T)))) {
                     return (T)a;
                 }
             }

@@ -24,7 +24,7 @@ namespace HareEngine {
                 _parent = value;
                 if (value != null) {
                     value._childs.Remove(this);
-                    value._childs.Add(this);
+                    _parent._childs.Add(this);
                 }
             }
         }
