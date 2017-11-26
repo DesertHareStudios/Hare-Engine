@@ -1,4 +1,5 @@
-﻿using OpenTK.Audio.OpenAL;
+﻿using OpenTK.Audio;
+using OpenTK.Audio.OpenAL;
 
 namespace HareEngine {
 

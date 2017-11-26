@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using OpenTK.Audio;
 using OpenTK.Audio.OpenAL;
 
 namespace HareEngine {
@@ -6,8 +7,6 @@ namespace HareEngine {
     public class AudioListener : Behaviour {
 
         private static List<AudioListener> listeners = new List<AudioListener>();
-
-        public AudioClip clip;
 
         public AudioListener(GameObject gameObject) : base(gameObject) { }
 

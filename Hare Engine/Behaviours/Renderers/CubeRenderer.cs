@@ -38,22 +38,6 @@ namespace HareEngine {
         }
 
         public override Vector2[] GetUVs() {
-            //Vector2[] uvs = new Vector2[] {
-            //    new Vector2(0, 1),
-            //    new Vector2(1, 0),
-            //    new Vector2(1, 0),
-            //    new Vector2(0, 0),
-            //    new Vector2(0, 1),
-            //    new Vector2(1, 0),
-            //    new Vector2(1, 0),
-            //    new Vector2(0, 0)
-            //};
-            //int[] ind = GetIndices();
-            //Vector2[] output = new Vector2[ind.Length];
-            //for (int i = 0; i < ind.Length; i++) {
-            //    output[i] = uvs[ind[i]];
-            //}
-            //return output;
             return new Vector2[] {
                 // left
                 new Vector2(0.0f, 1.0f),

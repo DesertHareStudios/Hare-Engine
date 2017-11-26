@@ -60,7 +60,7 @@
     <Compile Include="Behaviours\Renderers\Renderer.cs" />
     <Compile Include="Behaviours\Renderers\SpriteRenderer.cs" />
     <Compile Include="Color\Color.cs" />
-    <Compile Include="Debug\Debug.cs" />
+    <Compile Include="Debugging\Debug.cs" />
     <Compile Include="Fields\Range.cs" />
     <Compile Include="GameObject.cs" />
     <Compile Include="Geometry\Line.cs" />

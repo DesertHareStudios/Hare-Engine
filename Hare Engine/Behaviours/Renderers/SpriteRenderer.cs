@@ -4,9 +4,7 @@ namespace HareEngine {
 
     public class SpriteRenderer : Renderer {
 
-        public SpriteRenderer(GameObject gameObject) : base(gameObject) {
-            texture = new Texture("", "");
-        }
+        public SpriteRenderer(GameObject gameObject) : base(gameObject) {}
 
         public override Vector2[] GetUVs() {
             Vector2[] output = new Vector2[] {
