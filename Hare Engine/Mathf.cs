@@ -72,11 +72,30 @@ namespace HareEngine {
         }
 
         public static Vector3 GetEulerAngles(Quaternion q) {
-            return new Vector3(
-                    ToDegrees(Atan2(q.X * q.Z - q.Y * q.W, q.Y * q.Z + q.X * q.W)),
-                    ToDegrees(Acos(-(q.X * q.X) - (q.Y * q.Y) + (q.Z * q.Z) + (q.W * q.W))),
-                    ToDegrees(Atan2(q.X * q.Z + q.Y * q.W, q.X * q.W - q.Y * q.Z))
-                );
+            //return new Vector3(
+            //        ToDegrees(Atan2(q.X * q.Z - q.Y * q.W, q.Y * q.Z + q.X * q.W)),
+            //        ToDegrees(Acos(-(q.X * q.X) - (q.Y * q.Y) + (q.Z * q.Z) + (q.W * q.W))),
+            //        ToDegrees(Atan2(q.X * q.Z + q.Y * q.W, q.X * q.W - q.Y * q.Z))
+            //    );
+            float ysqr = q.Y * q.Y;
+            float t0 = +2.0f * (q.W * q.X + q.Y * q.Z);
+            float t1 = +1.0f - 2.0f * (q.X * q.X + ysqr);
+            float t2 = +2.0f * (q.W * q.Y - q.Z * q.X);
+            float t3 = +2.0f * (q.W * q.Z + q.X * q.Y);
+            float t4 = +1.0f - 2.0f * (ysqr + q.Z * q.Z);
+
+            if (t2 > 1f) {
+                t2 = 1f;
+            }
+            if (t2 < -1f) {
+                t2 = -1f;
+            }
+
+            float X = ToDegrees(Atan2(t0, t1));
+            float Y = ToDegrees(Asin(t2));
+            float Z = ToDegrees(Atan2(t3, t4));
+
+            return new Vector3(X, Y, Z);
         }
 
         public static float Sin(float a) {

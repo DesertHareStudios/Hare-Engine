@@ -1,24 +1,36 @@
 ﻿using System.Collections.Generic;
 using OpenTK.Audio;
 using OpenTK.Audio.OpenAL;
+using System;
+using OpenTK;
 
 namespace HareEngine {
 
     public class AudioListener : Behaviour {
 
-        private static List<AudioListener> listeners = new List<AudioListener>();
+        private Rigidbody rb;
+        private Vector3 lastPosition;
+        private Vector3 speed;
+        private Vector3 direction;
 
         public AudioListener(GameObject gameObject) : base(gameObject) { }
-
-        public override void OnEnable() {
-            listeners.Add(this);
+        
+        public override void FixedUpdate() {
+            lastPosition = transform.position;
+            direction = transform.forward;
         }
 
-        public override void OnDisable() {
-            listeners.Remove(this);
+        private void CalculateSpeed() {
+            if (rb != null) {
+                speed = rb.speed;
+            } else {
+                speed = transform.position - lastPosition;
+            }
         }
 
-        //TODO actually listen to audio
+        public void SendVelocityToAL() {
+            AL.Listener(ALListener3f.Velocity, ref speed);
+        }
 
     }
 

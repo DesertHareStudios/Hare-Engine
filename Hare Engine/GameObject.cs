@@ -68,6 +68,15 @@ namespace HareEngine {
             return null;
         }
 
+        public T GetGenericComponent<T>() where T : Behaviour {
+            foreach (Behaviour b in behaviours) {
+                if (b.GetType() == typeof(T) || b.GetType().IsSubclassOf(typeof(T))) {
+                    return (T)b;
+                }
+            }
+            return null;
+        }
+
         public void OnCollisionEnter(Collision collision) {
             foreach (Behaviour b in behaviours) {
                 if (b.Active) {

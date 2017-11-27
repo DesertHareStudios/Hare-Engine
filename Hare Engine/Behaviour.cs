@@ -37,6 +37,14 @@
             return gameObject.GetComponent<T>();
         }
 
+        protected T GetGenericComponent<T>() where T : Behaviour {
+            return gameObject.GetGenericComponent<T>();
+        }
+
+        protected void Destory(GameObject gameObject) {
+            Hare.aboutToDestroy.Add(gameObject);
+        }
+
         public virtual void Awake() { }
         public virtual void Start() { }
         public virtual void Update() { }

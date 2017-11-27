@@ -101,7 +101,7 @@ namespace HareEngine {
                         case "bmp":
                             Texture tex = new Texture(file, name);
                             break;
-                        case "mp3":
+                        //case "mp3":
                         case "ogg":
                         case "wav":
                             AudioClip audio = new AudioClip(file, name);

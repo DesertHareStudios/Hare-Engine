@@ -1,6 +1,10 @@
-﻿namespace HareEngine {
+﻿using System.Collections.Generic;
+
+namespace HareEngine {
 
     public class Hare {
+
+        public static List<GameObject> aboutToDestroy = new List<GameObject>();
 
         public static Window window;
         public static Color clearColor = new Color(0.5f, 0.5f, 0.5f);

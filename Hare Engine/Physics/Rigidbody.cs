@@ -7,8 +7,9 @@ namespace HareEngine {
 
         private static List<Rigidbody> bodies = new List<Rigidbody>();
 
-        private Geometry.Line path;
+        public Geometry.Line path { get; protected set; }
         private Vector3 previousPosition;
+        private Collider collider;
 
         public float mass = 1f;
         public bool useGravity = true;
@@ -26,6 +27,7 @@ namespace HareEngine {
             if (bodies == null) {
                 bodies = new List<Rigidbody>();
             }
+            collider = GetGenericComponent<Collider>();
         }
 
         public override void Awake() {
@@ -35,7 +37,9 @@ namespace HareEngine {
         public override void FixedUpdate() {
             previousPosition = transform.position;
             if (!isKinematic) {
+
                 transform.position += speed * Time.fixedDeltaTime * Time.timeScale;
+
                 if (useGravity) {
                     switch (Physics.Instance.gravityType) {
                         case GravityType.Classic:

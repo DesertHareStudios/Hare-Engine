@@ -15,8 +15,10 @@ namespace HareEngine {
         public static void UpdateData() {
             prevks = ks;
             ks = Keyboard.GetState();
-            prevjs = js;
-            js = Joystick.GetState(0);
+            try {
+                prevjs = js;
+                js = Joystick.GetState(0);
+            } catch { } //No joystick connected
             prevms = ms;
             ms = Mouse.GetState();
         }

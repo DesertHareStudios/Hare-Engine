@@ -68,6 +68,7 @@
     <Compile Include="Input.cs" />
     <Compile Include="Mathf.cs" />
     <Compile Include="Physics\Collider.cs" />
+    <Compile Include="Physics\Colliders\SpriteCollider.cs" />
     <Compile Include="Physics\Collision.cs" />
     <Compile Include="Physics\Physics.cs" />
     <Compile Include="Physics\Raycast.cs" />
