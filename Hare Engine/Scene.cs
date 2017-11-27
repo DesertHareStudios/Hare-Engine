@@ -5,7 +5,7 @@ using System.Threading;
 
 namespace HareEngine {
 
-    public class Scene {
+    public class Scene : ICloneable {
         public string Name = "";
         public List<GameObject> gameObjects = new List<GameObject>();
 
@@ -177,6 +177,10 @@ namespace HareEngine {
             foreach (Thread t in threads) {
                 t.Join();
             }
+        }
+
+        public object Clone() {
+            return this.MemberwiseClone();
         }
 
     }

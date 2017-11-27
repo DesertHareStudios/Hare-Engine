@@ -1,8 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace HareEngine {
 
-    public class GameObject {
+    public class GameObject : ICloneable {
 
         public List<Behaviour> behaviours;
         public string Name;
@@ -106,6 +107,9 @@ namespace HareEngine {
             }
         }
 
+        public object Clone() {
+            return this.MemberwiseClone();
+        }
     }
 
 }

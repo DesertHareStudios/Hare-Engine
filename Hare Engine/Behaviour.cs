@@ -1,6 +1,8 @@
-﻿namespace HareEngine {
+﻿using System;
 
-    public class Behaviour {
+namespace HareEngine {
+
+    public class Behaviour : ICloneable {
 
         private bool active = true;
 
@@ -56,6 +58,10 @@
         public virtual void OnCollisionExit(Collision collision) { }
         public virtual void OnTriggerEnter(Collider collider) { }
         public virtual void OnTriggerExit(Collider collider) { }
+
+        public object Clone() {
+            return this.MemberwiseClone();
+        }
 
     }
 

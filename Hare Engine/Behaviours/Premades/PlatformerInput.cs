@@ -19,6 +19,7 @@ namespace HareEngine {
             if (rb != null) {
 
                 if (transform.position.Y < 0f) {
+                    rb.useGravity = false;
                     transform.position.Y = 0f;
                     rb.speed.Y = 0f;
                 }
@@ -35,6 +36,7 @@ namespace HareEngine {
 
                 if (Input.GetButtonDown(Key.Space) || Input.GetButtonDown(Key.W)) {
                     rb.AddForce(0f, JumpForce, 0f);
+                    rb.useGravity = true;
                 }
             }
         }

@@ -1,9 +1,10 @@
 ﻿using System.Collections.Generic;
 using OpenTK;
+using System;
 
 namespace HareEngine {
 
-    public class Transform {
+    public class Transform : ICloneable {
 
         private Transform _parent;
         private List<Transform> _childs;
@@ -107,6 +108,9 @@ namespace HareEngine {
             return ModelMatrix * cam.ViewMatrix * cam.ProjectionMatrix;
         }
 
+        public object Clone() {
+            return this.MemberwiseClone();
+        }
     }
 
 }
